@@ -1,0 +1,1 @@
+For now, main is only a bit more than a hello world. It counts it's arguemnts and echos them on stdout.
