@@ -1,0 +1,35 @@
+CC = gcc
+
+#Add debug info, all warnings, and all extra warnings
+CFLAGS = -g -Wall -Wextra #ifndef STDIO_H
+#define STDIO_H
+
+#include <stdio.h>
+
+#endif /* STDIO_H */
+
+
+
+#CREATE BIN AND BUILD FOLDERS TO SAVE THE COMPILED FILES DURING RUNTIME
+bin_folder := $(shell mkdir -p bin)
+build_folder := $(shell mkdir -p build)
+
+default: cmaze
+
+
+#cmaze:
+#	echo "test"
+
+
+
+cmaze: main.o
+	$(CC) $(CFLAGS) -o bin/cmaze build/main.o
+
+main.o:
+	$(CC) $(CFLAGS) -c src/main.c
+
+
+#CLEAN COMMANDS
+clean:
+	rm -f bin/* build/*
+
