@@ -15,7 +15,7 @@ default: cmaze
 
 
 
-cmaze: main.o maze.o
+cmaze: main.o maze.o tile.o
 	$(CC) $(CFLAGS) build/main.o build/maze.o -o bin/cmaze
 
 main.o:
@@ -32,6 +32,8 @@ test_main.o:
 maze.o:
 	$(CC) $(CFLAGS) -c src/maze.c -o build/maze.o
 
+tile.o:
+	$(CC) $(CFLAGS) -c src/tile.c -o build/tile.o
 
 test_maze.o: maze.o
 	$(CC) $(CFLAGS) -c test/test_maze.c -o build/test_maze.o
