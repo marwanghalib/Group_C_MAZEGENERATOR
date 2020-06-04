@@ -85,8 +85,8 @@ int destroy_maze(maze_t *maze);
     create and return a cell_t structure describing the
     current state of the maze at 'x' 'y'
   require
-    0 <= x < maze->width
-    0 <= y < maze->height
+    -1 <= x < maze->width
+    -1 <= y < maze->height
     maze is in a valid state
   do
     return information relating to the presence or absence of
@@ -132,8 +132,8 @@ cell_t get_cell(maze_t *maze, int x, int y);
     updates maze with cell at x,y relating to doors only,
     ignoring doors at the edge of the maze
   requires
-    0 <= x < maze->width
-    0 <= y < maze->height
+    -1 <= x < maze->width
+    -1 <= y < maze->height
     maze is in a valid state
   ensure
     the walls around point x,y are updated
@@ -148,8 +148,8 @@ void set_door(cell_t cell, int x, int y, maze_t *maze);
     updates maze with cell at x,y relating to cross of walls only,
     ignoring walls at the edge of, or outside of the maze
   requires
-    0 <= x < maze->width
-    0 <= y < maze->height
+    -1 <= x < maze->width
+    -1 <= y < maze->height
     maze is in a valid state
   ensure
     the cross walls south east of x,y are updated
@@ -164,8 +164,8 @@ void set_walls(cell_t cell, int x, int y, maze_t *maze);
     updates maze with cell at x,y including the addition of start and end
     ignoring walls at the edge of, or outside of the maze
   requires
-    0 <= x < maze->width
-    0 <= y < maze->height
+    -1 <= x < maze->width
+    -1 <= y < maze->height
     maze is in a valid state
   ensure
     each wall described by cell that is in bounds is updated

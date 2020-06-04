@@ -118,20 +118,20 @@ void set_bias(double bias, maze_t *maze){
 cell_t get_cell(maze_t *maze, int x, int y){
     cell_t cell = (cell_t){.mask = 0};
 
-    cell.wall_east  = (x < maze->width-1 ) && ((y >= maze->height-1) ||
+    cell.wall_east  = (x < maze->width-1)  && ((y<0) || (y>=maze->height-1) ||
         ((maze->data->h_walls[y  ])[index_of_wall(x+1)]&mask_for_wall(x+1)));
-    cell.wall_south = (y < maze->height-1) && ((x >= maze->width-1) ||
+    cell.wall_south = (y < maze->height-1) && ((x<0) || (x>=maze->width-1) ||
         ((maze->data->v_walls[y+1])[index_of_wall(x  )]&mask_for_wall(x  )));
 
-    cell.wall_west  = (x >= maze->width-1)  ||
-        ((maze->data->h_walls[y  ])[index_of_wall(x  )]&mask_for_wall(x  ));
-    cell.wall_north = (y >= maze->height-1) ||
-        ((maze->data->v_walls[y  ])[index_of_wall(x  )]&mask_for_wall(x  ));
+    cell.wall_west  = (x >= 0) && ((y < 0) || (y>=maze->height-1) ||
+        ((maze->data->h_walls[y  ])[index_of_wall(x  )]&mask_for_wall(x  )));
+    cell.wall_north = (y >= 0) && ((x < 0) || (x >= maze->width-1) ||
+        ((maze->data->v_walls[y  ])[index_of_wall(x  )]&mask_for_wall(x  )));
 
-    cell.door_west  = (x > 0) &&
-        ((maze->data->h_walls[y  ])[index_of_wall(x-1)]&mask_for_wall(x-1));
-    cell.door_north = (y > 0) &&
-        ((maze->data->v_walls[y-1])[index_of_wall(x  )]&mask_for_wall(x  ));
+    cell.door_west  = (x >= 0) && (y >= 0) && ((y == 0) ||
+        ((maze->data->h_walls[y  ])[index_of_wall(x-1)]&mask_for_wall(x-1)));
+    cell.door_north = (x >= 0) && (y >= 0) && ((x == 0) ||
+        ((maze->data->v_walls[y-1])[index_of_wall(x  )]&mask_for_wall(x  )));
 
     cell.start = maze->start_x == x && maze->start_y == y;
     cell.end   = maze->end_x   == x && maze->end_y   == y;
@@ -139,7 +139,7 @@ cell_t get_cell(maze_t *maze, int x, int y){
 }
 
 static inline void set_wall_east(cell_t cell, int x, int y, maze_t *maze){
-    if(x < maze->width-1 && y < maze->height-1){
+    if(y >= 0 && y < maze->height-1 && x < maze->width-1){
         if(cell.wall_east){
             (maze->data->h_walls[y])[index_of_wall(x+1)] |=  mask_for_wall(x+1);
         }else{
@@ -149,7 +149,7 @@ static inline void set_wall_east(cell_t cell, int x, int y, maze_t *maze){
 }
 
 static inline void set_wall_south(cell_t cell, int x, int y, maze_t *maze){
-    if(x < maze->width-1 && y < maze->height-1){
+    if(x >= 0 && x < maze->width-1 && y < maze->height-1){
         if(cell.wall_south){
             (maze->data->v_walls[y+1])[index_of_wall(x)] |=  mask_for_wall(x);
         }else{
@@ -159,7 +159,7 @@ static inline void set_wall_south(cell_t cell, int x, int y, maze_t *maze){
 }
 
 static inline void set_wall_west(cell_t cell, int x, int y, maze_t *maze){
-    if(y < maze->width-1){
+    if(x >= 0 && y >= 0 && y < maze->width-1){
         if(cell.wall_west){
             (maze->data->h_walls[y])[index_of_wall(x-1)] |=  mask_for_wall(x-1);
         }else{
@@ -170,7 +170,7 @@ static inline void set_wall_west(cell_t cell, int x, int y, maze_t *maze){
 
 
 static inline void set_wall_north(cell_t cell, int x, int y, maze_t *maze){
-    if(x < maze->width-1){
+    if(x >= 0 && y >= 0 && x < maze->width-1){
         if(cell.wall_north){
             (maze->data->v_walls[y-1])[index_of_wall(x)] |=  mask_for_wall(x);
         }else{
@@ -180,7 +180,7 @@ static inline void set_wall_north(cell_t cell, int x, int y, maze_t *maze){
 }
 
 static inline void set_door_north(cell_t cell, int x, int y, maze_t *maze){
-    if(y > 0){
+    if(x >= 0 && y >= 0 && y > 0){
         if(cell.door_north){
             (maze->data->h_walls[y-1])[index_of_wall(x)] |=  mask_for_wall(x);
         }else{
@@ -190,7 +190,7 @@ static inline void set_door_north(cell_t cell, int x, int y, maze_t *maze){
 }
 
 static inline void set_door_west(cell_t cell, int x, int y, maze_t *maze){
-    if(x > 0){
+    if(x >= 0 && y >= 0 && x > 0){
         if(cell.wall_north){
             (maze->data->v_walls[y])[index_of_wall(x-1)] |=  mask_for_wall(x-1);
         }else{
