@@ -6,6 +6,8 @@
 
 typedef struct tile_set{
     char *empty;
+    char *before;
+    char *after;
     char *start;
     char *end;
     char *h_wall;
@@ -18,7 +20,7 @@ typedef struct tile_set{
     delete and free a tile_set
   ensure
     no memory is leaked
-  end
+  enddungeon
 */
 int delete_tile_set(tile_set_t* set);
 
@@ -67,25 +69,25 @@ tile_set_t* new_tile_set_plus(char* h_wall, char* v_wall, char* corner);
 
     corner numbers are described below, add row and column number
 
-       0  1  2  3
-     0 .  .- .  .-
-             |  |
+       0   1   2   3
+           |       |
+     0 .   .  -.  -.
 
-     4-. -.--. -.-
-             |  |
-       |  |  |  |
-     8 .  .- .  .-
-             |  |
-       |  |  |  |
-    12-. -.--. -.-
-             |  |
+           |       |
+     4 .   .  -.  -.
+       |   |   |   |
+           |       |
+     8 .-  .- -.- -.-
+
+           |       |
+    12 .-  .- -.- -.-
+       |   |   |   |
 
     alternatly,
-    E = 1
-    S = 2
-    W = 4
-    N = 8
-    sum the values of the walls
+    cross_north * 1 +
+    cross_west  * 2 +
+    west        * 4 +
+    north       * 8
 
   ensure
     tile_set is in a valid state
@@ -100,7 +102,8 @@ tile_set_t* new_tile_set_full_corners(char* h_wall, char* v_wall, char *corners[
 
 /**
   is
-    like 'new_tile_set_full_corners' but also assigns over default space start and end
+    like 'new_tile_set_full_corners' but also assigns over default space start and end characters,
+      and allows you to specify a char sequence to be printed before and another to be printed after the maze
   requires
     see 'new_tile_set_full_corners'
   ensures
@@ -108,8 +111,8 @@ tile_set_t* new_tile_set_full_corners(char* h_wall, char* v_wall, char *corners[
     all fields reflect their arguments
   end
 */
-tile_set_t* new_tile_set_no_defaults(char* empty, char* start, char* end, 
-        char* h_wall, char* v_wall, char *corners[16]);
+tile_set_t* new_tile_set_no_defaults(char* empty, char* start, char* end,
+        char* h_wall, char* v_wall, char* before, char* after, char *corners[16]);
 
 
 /**
