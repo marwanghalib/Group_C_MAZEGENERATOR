@@ -209,7 +209,7 @@ __attribute__ ((const)) inline static bool
 }
 
 
-__attribute__ ((pure)) cell_t get_cell(maze_t *maze, int x, int y){
+__attribute__ ((pure)) cell_t get_cell(const maze_t *maze, int x, int y){
     cell_t cell;
     int w = maze->width;
     int h = maze->height;
@@ -244,7 +244,7 @@ __attribute__ ((pure)) cell_t get_cell(maze_t *maze, int x, int y){
     return cell;
 }
 
-__attribute__ ((pure)) void* get_extra(maze_t* maze, int x, int y){
+__attribute__ ((pure)) void* get_extra(const maze_t* maze, int x, int y){
     if(!maze || !maze->data ||  x < 0 || x >= maze->width || y < 0 || y >= maze->height){
         return NULL;
     }else{

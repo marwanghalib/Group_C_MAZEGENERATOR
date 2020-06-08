@@ -129,7 +129,7 @@ int destroy_maze(maze_t *maze);
     maze is unchanged
   end
 */
-__attribute__ ((pure)) cell_t get_cell(maze_t *maze, int x, int y);
+__attribute__ ((pure)) cell_t get_cell(const maze_t *maze, int x, int y);
 
 /**
   is
@@ -204,7 +204,7 @@ __attribute__ ((const)) bool cells_are_equal(cell_t a, cell_t b);
       return a pointer to writable memory of the specified size. 
       This memory does not overlap other data.
  */
-__attribute__ ((pure)) void* get_extra(maze_t* maze, int x, int y);
+__attribute__ ((pure)) void* get_extra(const maze_t* maze, int x, int y);
 
 /**
  do
