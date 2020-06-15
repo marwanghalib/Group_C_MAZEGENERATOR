@@ -16,138 +16,77 @@
 #ifndef STDIO_H
 #define STDIO_H
 #include <stdio.h>
-#endif
+#include <stdlib.h>
+#include <string.h>
 
-#ifndef STDDEF_H
-#define STDDEF_H
-#include <stddef.h>
-#endif
+#endif /* STDIO_H */
+#define PRG_NAME "Maze Generator" /* program name */
+#define VERSION  "1.0"  /* version number */
 
-#ifndef MAZE_H
-#define MAZE_H
-#include "maze.h"
-#endif
+#include <main.h>
+#include <coll_input.h>
+#endif /* MAIN_H */
 
-#ifndef TILE_DEAFULT_H
-#define TILE_DEAFULT_H
-#include "tile_default.h"
-#endif
+//void (*collect_arguments(int argc, char** argv, FILE** output_file, maze_t* maze,tile_set_t** tile_set))(maze_t*);
 
-#ifndef TILE_H
-#define TILE_H
-#include "tile.h"
-#endif
+void help(void)
+{
+    printf(" %s - a maze generator and solver\n\
+Usage: %s [options]\n\
+\n\
+  --height              How tall is the maze\n\
+  --width               How tall is the maze\n\
+  --size or -s          How wide and tall is the maze\n\
+  --bias or -b          How biased is the maze: >1 more horizontal hallways <1 more vertical hallways\n\
+  -a or -algorithm      Which algorithm to use \n\
+  -v or --version       Display program name and version number\n\
+  -t or --tileset	    What characters to use to represent the walls of the maze in the output\n\
+  -o or	--output	    Where to send the output\n\
+  --solve	            Solve the maze\n\
+  -i or	--input	        Read stdin as FILE\n",
+            PRG_NAME, PRG_NAME);
 
-#ifndef PRINTER_H
-#define PRINTER_H
-#include "printer.h"
-#endif
+	exit(EXIT_SUCCESS);
+}
 
-void init_test_maze_1(maze_t* maze){
-    init_maze(5, 4, maze);
-    set_size_of_extra(sizeof(bool), maze);
-    cell_t c;
-    bool* extra;
+/*
+ void openfile(File *argv){
+    char *out_file = argv;
+    FILE *output_file=fopen(out_file,"w");
 
-    c = get_cell(maze, 0, 0);
-    c.east  = false;
-    c.start = true;
-    set_cell(c, 0, 0, maze);
-    extra = get_extra(maze, 0, 0);
-    extra[0] = true;
+ } */
+ //Display version information and exit succesfully
+void version(void)
+{
+	printf("\
+The Program name is %s and the version number is %s .\n",PRG_NAME, VERSION);
 
-    c = get_cell(maze, 1, 0);
-    c.south  = false;
-    set_cell(c, 1, 0, maze);
-    extra = get_extra(maze, 1, 0);
-    extra[0] = true;
+	exit(EXIT_SUCCESS);
+}
 
-    c = get_cell(maze, 2, 0);
-    c.east  = false;
-    c.south = false;
-    c.west  = false;
-    set_cell(c, 2, 0, maze);
-    extra = get_extra(maze, 2, 0);
-    extra[0] = true;
+void coll_args(int argc, char **argv, FILE** output_file)
+{
+	int i, height=5, width=10, bias = 1.0;
 
-    c = get_cell(maze, 3, 0);
-    c.south  = false;
-    set_cell(c, 3, 0, maze);
+	for (i = 1; i < argc; i++) {
+		if (strncmp(argv[i], "-h", 3) == 0
+		 || strncmp(argv[i], "--help", 7) == 0)
+			help();
+		else if (strncmp(argv[i], "-v", 7) == 0
+		        || strncmp(argv[i], "--version", 10) == 0)
+			version();
+        else if(strncmp(argv[i], "-o", 3) == 0
+		        || strncmp(argv[i], "--output", 9) == 0))
+		        openfile();
 
-    c = get_cell(maze, 4, 0);
-    c.south = false;
-    set_cell(c, 4, 0, maze);
-
-
-    c = get_cell(maze, 0, 1);
-    c.east  = false;
-    c.south = false;
-    set_cell(c, 0, 1, maze);
-    extra = get_extra(maze, 0, 1);
-    extra[0] = true;
-
-    extra = get_extra(maze, 1, 1);
-    extra[0] = true;
-
-    c = get_cell(maze, 3, 1);
-    c.south  = false;
-    set_cell(c, 3, 1, maze);
-
-    c = get_cell(maze, 2, 1);
-    c.east  = false;
-    set_cell(c, 2, 1, maze);
-    extra = get_extra(maze, 2, 1);
-    extra[0] = true;
-
-    c = get_cell(maze, 4, 1);
-    c.south = false;
-    c.west  = false;
-    set_cell(c, 4, 1, maze);
-
-
-    c = get_cell(maze, 0, 2);
-    c.east  = false;
-    c.south = false;
-    set_cell(c, 0, 2, maze);
-
-    c = get_cell(maze, 1, 2);
-    c.south  = false;
-    set_cell(c, 1, 2, maze);
-
-    c = get_cell(maze, 2, 2);
-    c.east  = false;
-    c.south = false;
-    set_cell(c, 2, 2, maze);
-
-
-    extra = get_extra(maze, 0, 3);
-    extra[0] = true;
-
-    c = get_cell(maze, 2, 3);
-    c.east  = false;
-    c.west  = false;
-    set_cell(c, 2, 3, maze);
-
-    c = get_cell(maze, 4, 3);
-    c.west  = false;
-    c.end = true;
-    set_cell(c, 4, 3, maze);
+        break;
+        }
+ }
 }
 
 int main(int argc, char* argv[]){
 
-    //Initializing test maze
-    maze_t myMaze;
-    maze_t *pmyMaze = &myMaze;
-    init_test_maze_1(pmyMaze);
-
-    //Initializing tile set
-    tile_set_t myTileSet;
-    tile_set_t *pmyTileSet = &myTileSet;
-    myTileSet = hedge_set;
-
-    //Testing my print function
-    print(pmyMaze, pmyTileSet , stdout);
+   coll_args(argc, argv);
 
     return 0;
 }
