@@ -11,8 +11,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <main.h>
-#include <coll_input.h>
+//#include <main.h>
+//#include <coll_input.h>
 
 #endif /* MAIN_H */
 
@@ -55,30 +55,30 @@ The Program name and the version number is.\n",
 	exit(EXIT_SUCCESS);
 }
 
-void coll_args(int argc, char *argv[])
+void coll_args(int argc, char *argv[]){
     int width = 10;
     int height = 5;
     char* output_file_path = NULL;
     char* alg_name = "backtrack";
     char* tile_set_name = "hedge";
 
-    int i = 1
+    int i = 1;
 
     while(argv[i]) {
-        if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0){
+        if (strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--help") == 0){
             help();
             return NULL;
-        }else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0){
+        }else if (strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "--version") == 0){
             version();
             return NULL;
-        }else if(strcmp(argv[i], "--width") == 0 || strcmp(argv[i], "--w"){
+        }else if(strcmp(argv[i], "--width") == 0 || strcmp(argv[i], "--w")){
             i++;
             if(argv[i] == NULL){
                 help();
                 return NULL;
             }
 
-             width = atoi[argv[i]];
+             int width = atoi(argv[i]);
              i++;
              if (width > 0){
                 width;
@@ -86,15 +86,16 @@ void coll_args(int argc, char *argv[])
 
              else{
                help();
+             }
                return NULL;
-         }else if(strcmp(argv[i], "--height") == 0 || strcmp(argv[i], "--h"){
+         }else if(strcmp(argv[i], "--height") == 0 || strcmp(argv[i], "--h")){
               i++;
               if(argv[i] == NULL){
                 help();
                 return NULL;
             }
-            
-            height = atoi[argv[i]];
+
+            int height = atoi(argv[i]);
               i++;
               if (height > 0){
                   height;
@@ -105,8 +106,9 @@ void coll_args(int argc, char *argv[])
          }
         }
     }
-
 }
+
+
 
 
 
