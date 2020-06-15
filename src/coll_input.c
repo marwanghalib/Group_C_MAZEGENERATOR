@@ -17,9 +17,9 @@
 #endif /* MAIN_H */
 
 
-
+/*
 void (*gen_alg(maze_t* maze)) collect_arguments(int argc, char **argv, File** output_file, maze_t* maze, tile_set_t** tile_set){
-
+*/
 /* Display help information and exit succesfully
  */
 
@@ -56,21 +56,56 @@ The Program name and the version number is.\n",
 }
 
 void coll_args(int argc, char *argv[])
-{
-	int i;
+    int width = 10;
+    int height = 5;
+    char* output_file_path = NULL;
+    char* alg_name = "backtrack";
+    char* tile_set_name = "hedge";
 
-	for (i = 1; i < argc; ++i) {
-		if (strncmp(argv[i], "-h", 3) == 0
-		 || strncmp(argv[i], "--help", 7) == 0)
-			help();
-		else if (strncmp(argv[i], "-v", 7) == 0
-		        || strncmp(argv[i], "--version", 10) == 0)
-			version();
+    int i = 1
 
-        else{
-        break;
+    while(argv[i]) {
+        if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0){
+            help();
+            return NULL;
+        }else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0){
+            version();
+            return NULL;
+        }else if(strcmp(argv[i], "--width") == 0 || strcmp(argv[i], "--w"){
+            i++;
+            if(argv[i] == NULL){
+                help();
+                return NULL;
+            }
+            /* read the number stored in argv[i] into width */
+             width = atoi[argv[i]];
+             i++;
+             if (width > 0){
+                width;
+              }
+
+             else{
+               help();
+               return NULL;
+         }else if(strcmp(argv[i], "--height") == 0 || strcmp(argv[i], "--h"){
+              i++;
+              if(argv[i] == NULL){
+                help();
+                return NULL;
+            }
+            /* read the number stored in argv[i] into height */
+            height = atoi[argv[i]];
+              i++;
+              if (height > 0){
+                  height;
+               }
+              else{
+                help();
+                return NULL;
+         }
         }
- }
+    }
+
 }
 
 
