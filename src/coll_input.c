@@ -11,8 +11,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-//#include <main.h>
-//#include <coll_input.h>
+#include <main.h>
+#include <coll_input.h>
 
 #endif /* MAIN_H */
 
@@ -78,7 +78,7 @@ void coll_args(int argc, char *argv[]){
                 return NULL;
             }
 
-             int width = atoi(argv[i]);
+             width = atoi(argv[i]);
              i++;
              if (width > 0){
                 width;
@@ -95,7 +95,7 @@ void coll_args(int argc, char *argv[]){
                 return NULL;
             }
 
-            int height = atoi(argv[i]);
+              height = atoi(argv[i]);
               i++;
               if (height > 0){
                   height;
