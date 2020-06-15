@@ -77,7 +77,7 @@ void coll_args(int argc, char *argv[])
                 help();
                 return NULL;
             }
-            /* read the number stored in argv[i] into width */
+
              width = atoi[argv[i]];
              i++;
              if (width > 0){
@@ -93,7 +93,7 @@ void coll_args(int argc, char *argv[])
                 help();
                 return NULL;
             }
-            /* read the number stored in argv[i] into height */
+            
             height = atoi[argv[i]];
               i++;
               if (height > 0){
