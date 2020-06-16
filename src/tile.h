@@ -128,5 +128,5 @@ tile_set_t* new_tile_set_no_defaults(char* empty, char* start, char* end,
     the char* returned is the correct corner reflecting
 
 */
-char* get_corner(tile_set_t* set, cell_t cell);
+char* get_corner(const tile_set_t* set, cell_t cell);
 

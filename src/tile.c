@@ -219,7 +219,7 @@ tile_set_t* new_tile_set_no_defaults(
     return set;
 }
 
-char* get_corner(tile_set_t* set, cell_t cell){
+char* get_corner(const tile_set_t* set, cell_t cell){
     uint8_t c = cell.cross_north     |
                 cell.cross_west  <<1 |
                 cell.west        <<2 |
