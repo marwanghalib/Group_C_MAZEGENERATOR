@@ -100,6 +100,7 @@ void crash_print(tile_set_t* set){
 
 bool new_tile_set_creates_a_tile_set_with_the_correct_defaults(void){
     tile_set_t* set = new_tile_set("#");
+    /*print_tile_set(set);*/
     
     /*strcmp returns 0 if they are equal, 
       if any of these ar unequal it fails*/
@@ -111,7 +112,7 @@ bool new_tile_set_creates_a_tile_set_with_the_correct_defaults(void){
         strcmp(set->h_wall,     "#") ||
         strcmp(set->v_wall,     "#") ||
         
-        strcmp(set->corner[0],  "#") ||
+        strcmp(set->corner[0],  " ") ||
         strcmp(set->corner[1],  "#") ||
         strcmp(set->corner[2],  "#") ||
         strcmp(set->corner[3],  "#") ||
@@ -148,7 +149,7 @@ bool new_tile_set_plus_creates_a_tile_set_with_the_correct_defaults_and_respects
         strcmp(set->h_wall,     "-") ||
         strcmp(set->v_wall,     "|") ||
         
-        strcmp(set->corner[0],  "+") ||
+        strcmp(set->corner[0],  " ") ||
         strcmp(set->corner[1],  "+") ||
         strcmp(set->corner[2],  "+") ||
         strcmp(set->corner[3],  "+") ||
@@ -301,7 +302,7 @@ bool new_tile_set_supports_a_multy_byte_string(void){
         strcmp(set->h_wall,     "#+") ||
         strcmp(set->v_wall,     "#+") ||
         
-        strcmp(set->corner[0],  "#+") ||
+        strcmp(set->corner[0],  " ") ||
         strcmp(set->corner[1],  "#+") ||
         strcmp(set->corner[2],  "#+") ||
         strcmp(set->corner[3],  "#+") ||
@@ -338,7 +339,7 @@ bool new_tile_set_plus_supports_multy_byte_characters(void){
         strcmp(set->h_wall,     "---") ||
         strcmp(set->v_wall,     "[]") ||
         
-        strcmp(set->corner[0],  "{++}") ||
+        strcmp(set->corner[0],  " ") ||
         strcmp(set->corner[1],  "{++}") ||
         strcmp(set->corner[2],  "{++}") ||
         strcmp(set->corner[3],  "{++}") ||

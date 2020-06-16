@@ -64,7 +64,9 @@ tile_set_t* new_tile_set(char* wall){
     set->end    = set->empty+4;
     set->h_wall = set->empty+6;
     set->v_wall = set->empty+6;
-    for(int i = 0; i < 16; i++){
+    
+    set->corner[0] = set->empty;
+    for(int i = 1; i < 16; i++){
         set->corner[i] = set->empty+6;
     }
     return set;
@@ -103,8 +105,9 @@ tile_set_t* new_tile_set_plus(char* h_wall, char* v_wall, char* corner){
     set->v_wall = set->empty+i;
     i += strlen(v_wall)+1;
 
+    set->corner[0] = set->empty;
     strcpy(set->empty+i, corner);
-    for(int n = 0; n < 16; n++){
+    for(int n = 1; n < 16; n++){
         set->corner[n] = set->empty+i;
     }
     return set;
