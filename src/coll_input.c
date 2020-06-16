@@ -11,15 +11,13 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-//#include <main.h>
-//#include <coll_input.h>
+#include <main.h>
+
 
 #endif /* MAIN_H */
 
 
-/*
-void (*gen_alg(maze_t* maze)) collect_arguments(int argc, char **argv, File** output_file, maze_t* maze, tile_set_t** tile_set){
-*/
+
 /* Display help information and exit succesfully
  */
 
@@ -55,91 +53,134 @@ The Program name and the version number is.\n",
 	exit(EXIT_SUCCESS);
 }
 
+/* This function collects all the arguments
+ */
 void coll_args(int argc, char *argv[],maze_t* maze, tile_set_t** tile_set){
     int width = 10;
     int height = 5;
-    int bias = 1.0;
+    double bias = 1.0;
     char* output_file_path = NULL;
     char* alg_name = "backtrack";
     char* tile_set_name = "hedge";
 
-    int i = 1;
+    int i = 0;
 
-    while(argv[i]) {
-        if (strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--help") == 0){
+    while(i<argc) {
+      char *temp_argv=strtok(argv[i],"?");
+      printf("%s",temp_argv);
+        if (strcmp(temp_argv, "-h") == 0 || strcmp(temp_argv, "--help") == 0){
             help();
             return NULL;
-        }else if (strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "--version") == 0){
+        }else if (strcmp(temp_argv, "-v") == 0 || strcmp(temp_argv, "--version") == 0){
             version();
             return NULL;
-        }else if(strcmp(argv[i], "--width") == 0 || strcmp(argv[i], "--w")){
-            i++;
-            if(argv[i] == NULL){
+        }else if(strcmp(temp_argv, "--width") == 0){
+           temp_argv = strtok(NULL, "?");
+            if(temp_argv == NULL){
                 help();
                 return NULL;
             }
 
-             width = atoi(argv[i]);
+             width = atoi(temp_argv);
              i++;
              if (width > 0){
-                maze -> width=width;
+                width;
               }
 
              else{
                help();
+             return NULL;
              }
-               return NULL;
-         }else if(strcmp(argv[i], "--height") == 0 || strcmp(argv[i], "--h")){
-              i++;
-              if(argv[i] == NULL){
+         }else if(strcmp(temp_argv, "--height") == 0){
+              temp_argv = strtok(NULL, "?");
+              if(temp_argv == NULL){
                 help();
                 return NULL;
             }
 
-              height = atoi(argv[i]);
+              height = atoi(temp_argv);
               i++;
               if (height > 0){
-                  maze -> height=height;
+                  height;
                }
               else{
                 help();
+              return NULL;
               }
-                //return NULL;
-         }else if(strcmp(argv[i], "--bias") == 0 || strcmp(argv[i], "--b")){
-                i++;
-               if(argv[i] == NULL){
+
+         }else if(strcmp(temp_argv, "--bias") == 0 || strcmp(temp_argv, "-b")){
+              temp_argv = strtok(NULL, "?");
+               if(temp_argv == NULL){
                 help();
                 return NULL;
             }
 
-              bias = atoi(argv[i]);
+              bias = atof(temp_argv);
               i++;
               if (bias > 0){
-                  maze -> bias= bias;
+                  bias;
                }
               else{
                 help();
                 return NULL;
-              }
-         }else if(strcmp(argv[i], "--tileset") == 0 || strcmp(argv[i], "--t")==0){
-              i++;
-              if(argv[i] == NULL){
+            }
+         }else if(strcmp(temp_argv, "--tileset") == 0 || strcmp(temp_argv, "-t")==0){
+              temp_argv = strtok(NULL, "?");
+              if(temp_argv == NULL){
                 help();
                 return NULL;
             }
 
-              tile_set_name = argv[i];
+              tile_set_name = temp_argv;
               i++;
               if (tile_set){
-                  tile_set ->tile_set_name= tile_set_name;
+                 tile_set_name;
                }
               else{
                 help();
                 return NULL;
-        }
        }
-      }
-     }
+     }else if(strcmp(temp_argv, "-a") == 0||strcmp(temp_argv, "--alg") == 0||strcmp(temp_argv, "--algorithm") == 0){
+            temp_argv = strtok(NULL, "?");
+            if(temp_argv == NULL){
+                help();
+                return NULL;
+            }
+            alg_name=temp_argv;
+            i++;
+        }
+      else if(strcmp(temp_argv, "-s") == 0||strcmp(temp_argv, "--size") == 0){
+            temp_argv = strtok(NULL, "?");
+            if(temp_argv == NULL){
+                help();
+                return NULL;
+            }
+            width=atoi(temp_argv);
+            temp_argv = strtok(NULL, "?");
+            if(temp_argv == NULL){
+                help();
+                return NULL;
+            }
+            height=atoi(temp_argv);
+            i++;
+            if(width<0||height<0)
+            {
+              help();
+              return NULL;
+            }
+        }
+      else if(strcmp(temp_argv, "-o") == 0||strcmp(temp_argv, "--output") == 0){
+            temp_argv = strtok(NULL, "?");
+            if(temp_argv == NULL){
+                help();
+                return NULL;
+            }
+
+            output_file_path=temp_argv;
+            i++;
+        }
+   }
+ }
 
 
 
