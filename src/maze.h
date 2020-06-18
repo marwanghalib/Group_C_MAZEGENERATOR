@@ -129,7 +129,7 @@ int destroy_maze(maze_t *maze);
     maze is unchanged
   end
 */
-__attribute__ ((pure)) cell_t get_cell(maze_t *maze, int x, int y);
+__attribute__ ((pure)) cell_t get_cell(const maze_t *maze, int x, int y);
 
 /**
   is
@@ -198,13 +198,24 @@ __attribute__ ((const)) bool cells_are_equal(cell_t a, cell_t b);
   do
     get a pointer to the extra data stored in the maze about this location
   ensure 
-    if set_size_of_extra has not been called, or it has been called with a value <= 0, will return null
-    if the location x,y is outside the maze, return null
+    if set_size_of_extra has not been called, 
+      or it has been called with a value <= 0, 
+      will return null
+    if the location x,y is outside the maze, 
+      return null
     otherwise
       return a pointer to writable memory of the specified size. 
       This memory does not overlap other data.
  */
-__attribute__ ((pure)) void* get_extra(maze_t* maze, int x, int y);
+__attribute__ ((pure)) void* get_extra(const maze_t* maze, int x, int y);
+
+/**
+  do
+    return true if
+      there is some non-0 byte
+      stored in the extra data for this position in this maze
+ */
+__attribute__ ((pure)) bool is_full(const maze_t* maze, int x, int y);
 
 /**
  do

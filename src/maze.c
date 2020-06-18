@@ -209,7 +209,7 @@ __attribute__ ((const)) inline static bool
 }
 
 
-__attribute__ ((pure)) cell_t get_cell(maze_t *maze, int x, int y){
+__attribute__ ((pure)) cell_t get_cell(const maze_t *maze, int x, int y){
     cell_t cell;
     int w = maze->width;
     int h = maze->height;
@@ -244,11 +244,24 @@ __attribute__ ((pure)) cell_t get_cell(maze_t *maze, int x, int y){
     return cell;
 }
 
-__attribute__ ((pure)) void* get_extra(maze_t* maze, int x, int y){
+__attribute__ ((pure)) void* get_extra(const maze_t* maze, int x, int y){
     if(!maze || !maze->data ||  x < 0 || x >= maze->width || y < 0 || y >= maze->height){
         return NULL;
     }else{
         return maze->data->extra+(maze->data->size_of_extra * (maze->width * y + x));
+    }
+}
+
+__attribute__ ((pure)) bool is_full(const maze_t* maze, int x, int y){
+    if(!maze || !maze->data || !maze->data->size_of_extra || x < 0 || x >= maze->width || y < 0 || y >= maze->height){
+        return false;
+    }else{
+        char* p = maze->data->extra+(maze->data->size_of_extra * (maze->width * y + x));
+        unsigned char accumulator = 0;
+        for(unsigned int i = 0; i < maze->data->size_of_extra; i++){
+            accumulator |= p[i];
+        }
+        return !!accumulator;
     }
 }
 
