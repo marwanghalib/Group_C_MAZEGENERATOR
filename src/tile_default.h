@@ -5,6 +5,7 @@
 
 static const tile_set_t hedge_set = (tile_set_t){
     .empty      = " ",
+    .full       = ".",
     .before     = "",
     .after      = "",
     .start      = "<",
@@ -31,6 +32,7 @@ static const tile_set_t hedge_set = (tile_set_t){
 
 static const tile_set_t dungen_set = (tile_set_t){
     .empty      = " ",
+    .full       = ".",
     .before     = "",
     .after      = "",
     .start      = "<",
@@ -57,6 +59,7 @@ static const tile_set_t dungen_set = (tile_set_t){
 
 static const tile_set_t vt100_set = (tile_set_t){
     .empty      = "_",
+    .full       = "a",
     .before     = "\x1b(0",
     .after      = "\x1b(B",
     .start      = "<",

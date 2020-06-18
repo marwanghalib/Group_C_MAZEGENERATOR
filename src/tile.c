@@ -46,7 +46,7 @@ int delete_tile_set(tile_set_t* set){
 }
 
 tile_set_t* new_tile_set(char* wall){
-    char default_string[] = {' ', '\0', '<', '\0', '>', '\0'};
+    char default_string[] = {' ', '\0', '.', '\0', '<', '\0', '>', '\0'};
     tile_set_t* set = calloc(1, sizeof(tile_set_t));
     if(!set){
         return NULL;
@@ -60,21 +60,22 @@ tile_set_t* new_tile_set(char* wall){
     strcpy(set->empty+sizeof(default_string), wall);
     set->before = set->empty+1;
     set->after  = set->empty+1;
-    set->start  = set->empty+2;
-    set->end    = set->empty+4;
-    set->h_wall = set->empty+6;
-    set->v_wall = set->empty+6;
+    set->full   = set->empty+2;
+    set->start  = set->empty+4;
+    set->end    = set->empty+6;
+    set->h_wall = set->empty+8;
+    set->v_wall = set->empty+8;
     
     set->corner[0] = set->empty;
     for(int i = 1; i < 16; i++){
-        set->corner[i] = set->empty+6;
+        set->corner[i] = set->empty+8;
     }
     return set;
 }
 
 
 tile_set_t* new_tile_set_plus(char* h_wall, char* v_wall, char* corner){
-    char default_string[] = {' ', '\0', '<', '\0', '>', '\0'};
+    char default_string[] = {' ', '\0', '.', '\0', '<', '\0', '>', '\0'};
     tile_set_t* set = calloc(1, sizeof(tile_set_t));
     if(!set){
         return NULL;
@@ -92,10 +93,11 @@ tile_set_t* new_tile_set_plus(char* h_wall, char* v_wall, char* corner){
     memcpy(set->empty, default_string, sizeof(default_string));
     set->before = set->empty+1;
     set->after  = set->empty+1;
-    set->start  = set->empty+2;
-    set->end    = set->empty+4;
+    set->full   = set->empty+2;
+    set->start  = set->empty+4;
+    set->end    = set->empty+6;
 
-    size_t i = 6;
+    size_t i = 8;
 
     strcpy(set->empty+i, h_wall);
     set->h_wall = set->empty+i;
@@ -114,7 +116,7 @@ tile_set_t* new_tile_set_plus(char* h_wall, char* v_wall, char* corner){
 }
 
 tile_set_t* new_tile_set_full_corners(char* h_wall, char* v_wall, char *corners[16]){
-    char default_string[] = {' ', '\0', '<', '\0', '>', '\0'};
+    char default_string[] = {' ', '\0', '.', '\0', '<', '\0', '>', '\0'};
     tile_set_t* set = calloc(1, sizeof(tile_set_t));
     if(!set){
         return NULL;
@@ -134,10 +136,11 @@ tile_set_t* new_tile_set_full_corners(char* h_wall, char* v_wall, char *corners[
     memcpy(set->empty, default_string, sizeof(default_string));
     set->before = set->empty+1;
     set->after  = set->empty+1;
-    set->start  = set->empty+2;
-    set->end    = set->empty+4;
+    set->full   = set->empty+2;
+    set->start  = set->empty+4;
+    set->end    = set->empty+6;
 
-    size_t i = 6;
+    size_t i = 8;
 
     strcpy(set->empty+i, h_wall);
     set->h_wall = set->empty+i;
@@ -157,6 +160,7 @@ tile_set_t* new_tile_set_full_corners(char* h_wall, char* v_wall, char *corners[
 
 tile_set_t* new_tile_set_no_defaults(
         char* empty,
+        char* full,
         char* start,
         char* end,
         char* h_wall,
@@ -170,6 +174,7 @@ tile_set_t* new_tile_set_no_defaults(
     }
     size_t arr_len = 0;
     arr_len += strlen(empty)+1;
+    arr_len += strlen(full)+1;
     arr_len += strlen(before)+1;
     arr_len += strlen(after)+1;
     arr_len += strlen(start)+1;
@@ -189,6 +194,10 @@ tile_set_t* new_tile_set_no_defaults(
 
     strcpy(set->empty, empty);
     i += strlen(empty)+1;
+
+    set->full = set->empty+i;
+    strcpy(set->full, full);
+    i += strlen(full)+1;
 
     set->before = set->empty+i;
     strcpy(set->before, before);

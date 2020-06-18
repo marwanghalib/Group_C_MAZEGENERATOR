@@ -6,6 +6,7 @@
 
 typedef struct tile_set{
     char *empty;
+    char *full;
     char *before;
     char *after;
     char *start;
@@ -111,7 +112,7 @@ tile_set_t* new_tile_set_full_corners(char* h_wall, char* v_wall, char *corners[
     all fields reflect their arguments
   end
 */
-tile_set_t* new_tile_set_no_defaults(char* empty, char* start, char* end,
+tile_set_t* new_tile_set_no_defaults(char* empty, char* full, char* start, char* end,
         char* h_wall, char* v_wall, char* before, char* after, char *corners[16]);
 
 

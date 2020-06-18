@@ -21,6 +21,7 @@
 bool hedge_set_reflects_requirements(void){
     const tile_set_t* set = TILE_SET_HEDGE;
     if( strcmp(set->empty,      " ") ||
+        strcmp(set->full,       ".") ||
         strcmp(set->before,     "" ) ||
         strcmp(set->after,      "" ) ||
         strcmp(set->start,      "<") ||
@@ -28,7 +29,7 @@ bool hedge_set_reflects_requirements(void){
         strcmp(set->h_wall,     "#") ||
         strcmp(set->v_wall,     "#") ||
         
-        strcmp(set->corner[0],  "#") ||
+        strcmp(set->corner[0],  " ") ||
         strcmp(set->corner[1],  "#") ||
         strcmp(set->corner[2],  "#") ||
         strcmp(set->corner[3],  "#") ||
@@ -54,6 +55,7 @@ bool hedge_set_reflects_requirements(void){
 bool dungen_set_reflects_requirements(void){
     const tile_set_t* set = TILE_SET_DUNGEN;
     if( strcmp(set->empty,      " ") ||
+        strcmp(set->full,       ".") ||
         strcmp(set->before,     "" ) ||
         strcmp(set->after,      "" ) ||
         strcmp(set->start,      "<") ||
@@ -61,7 +63,7 @@ bool dungen_set_reflects_requirements(void){
         strcmp(set->h_wall,     "-") ||
         strcmp(set->v_wall,     "|") ||
         
-        strcmp(set->corner[0],  "-") ||
+        strcmp(set->corner[0],  " ") ||
         strcmp(set->corner[1],  "-") ||
         strcmp(set->corner[2],  "-") ||
         strcmp(set->corner[3],  "-") ||
@@ -86,12 +88,13 @@ bool dungen_set_reflects_requirements(void){
 bool vt100_set_reflects_requirements(void){
     const tile_set_t* set = TILE_SET_VT100;
     if( strcmp(set->empty,      "_") ||
+        strcmp(set->full,       "a") ||
         strcmp(set->before,     "\x1b(0" ) ||
         strcmp(set->after,      "\x1b(B" ) ||
         strcmp(set->start,      "<") ||
         strcmp(set->end,        ">") ||
-        strcmp(set->h_wall,     "x") ||
-        strcmp(set->v_wall,     "q") ||
+        strcmp(set->h_wall,     "q") ||
+        strcmp(set->v_wall,     "x") ||
         
         strcmp(set->corner[0],  "_") ||
         strcmp(set->corner[1],  "x") ||

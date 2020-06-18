@@ -44,6 +44,7 @@ typedef struct tile_set{
  */
 void print_tile_set(const tile_set_t* set){
      printf("empty    \"%s\"\n"
+            "full    \"%s\"\n"
             "before   \"%s\"\n"
             "after    \"%s\"\n"
             "start    \"%s\"\n"
@@ -66,7 +67,8 @@ void print_tile_set(const tile_set_t* set){
             "corner_D \"%s\"\n"
             "corner_E \"%s\"\n"
             "corner_F \"%s\"\n", 
-        set->empty,     
+        set->empty, 
+        set->full,     
         set->before,    
         set->after,     
         set->start,     
@@ -105,6 +107,7 @@ bool new_tile_set_creates_a_tile_set_with_the_correct_defaults(void){
     /*strcmp returns 0 if they are equal, 
       if any of these ar unequal it fails*/
     if( strcmp(set->empty,      " ") ||
+        strcmp(set->full,       ".") ||
         strcmp(set->before,     "" ) ||
         strcmp(set->after,      "" ) ||
         strcmp(set->start,      "<") ||
@@ -142,6 +145,7 @@ bool new_tile_set_plus_creates_a_tile_set_with_the_correct_defaults_and_respects
     /*strcmp returns 0 if they are equal, 
       if any of these ar unequal it fails*/
     if( strcmp(set->empty,      " ") ||
+        strcmp(set->full,       ".") ||
         strcmp(set->before,     "" ) ||
         strcmp(set->after,      "" ) ||
         strcmp(set->start,      "<") ||
@@ -197,6 +201,7 @@ bool new_tile_set_full_corners_creates_a_tile_set_with_the_correct_defaults_and_
     /*strcmp returns 0 if they are equal, 
       if any of these ar unequal it fails*/
     if( strcmp(set->empty,      " ") ||
+        strcmp(set->full,       ".") ||
         strcmp(set->before,     "" ) ||
         strcmp(set->after,      "" ) ||
         strcmp(set->start,      "<") ||
@@ -248,7 +253,7 @@ bool new_tile_set_no_defaults_creates_a_tile_set_that_respects_the_arguments(voi
     corners[13]= "D";
     corners[14]= "E";
     corners[15]= "F";
-    tile_set_t* set = new_tile_set_no_defaults("_", "s", "e", "h", "v", "b", "a", corners);
+    tile_set_t* set = new_tile_set_no_defaults("_", "*", "s", "e", "h", "v", "b", "a", corners);
     
     //crash_print(set);
     //puts("now a clean one");
@@ -257,6 +262,7 @@ bool new_tile_set_no_defaults_creates_a_tile_set_that_respects_the_arguments(voi
     /*strcmp returns 0 if they are equal, 
       if any of these ar unequal it fails*/
     if( strcmp(set->empty,      "_") ||
+        strcmp(set->full,       "*") ||
         strcmp(set->before,     "b") ||
         strcmp(set->after,      "a") ||
         strcmp(set->start,      "s") ||
@@ -295,6 +301,7 @@ bool new_tile_set_supports_a_multy_byte_string(void){
     /*strcmp returns 0 if they are equal, 
       if any of these ar unequal it fails*/
     if( strcmp(set->empty,      " ") ||
+        strcmp(set->full,       ".") ||
         strcmp(set->before,     "" ) ||
         strcmp(set->after,      "" ) ||
         strcmp(set->start,      "<") ||
@@ -332,6 +339,7 @@ bool new_tile_set_plus_supports_multy_byte_characters(void){
     /*strcmp returns 0 if they are equal, 
       if any of these ar unequal it fails*/
     if( strcmp(set->empty,      " ") ||
+        strcmp(set->full,       ".") ||
         strcmp(set->before,     "" ) ||
         strcmp(set->after,      "" ) ||
         strcmp(set->start,      "<") ||
@@ -387,6 +395,7 @@ bool new_tile_set_full_corners_supports_multy_byte_characters(void){
     /*strcmp returns 0 if they are equal, 
       if any of these ar unequal it fails*/
     if( strcmp(set->empty,      " ") ||
+        strcmp(set->full,       ".") ||
         strcmp(set->before,     "" ) ||
         strcmp(set->after,      "" ) ||
         strcmp(set->start,      "<") ||
@@ -438,7 +447,7 @@ bool new_tile_set_no_defaults_supports_multy_byte_characters(){
     corners[13]= "xDx";
     corners[14]= "xEx";
     corners[15]= "xFx";
-    tile_set_t* set = new_tile_set_no_defaults("___", "[s]", "[e]", "[-]", "{|}", "maze below:\n", "maze above\n", corners);
+    tile_set_t* set = new_tile_set_no_defaults("___", "&&", "[s]", "[e]", "[-]", "{|}", "maze below:\n", "maze above\n", corners);
     
     //crash_print(set);
     //puts("now a clean one");
@@ -447,6 +456,7 @@ bool new_tile_set_no_defaults_supports_multy_byte_characters(){
     /*strcmp returns 0 if they are equal, 
       if any of these ar unequal it fails*/
     if( strcmp(set->empty,      "___") ||
+        strcmp(set->full,       "&&") ||
         strcmp(set->before,     "maze below:\n") ||
         strcmp(set->after,      "maze above\n") ||
         strcmp(set->start,      "[s]") ||
