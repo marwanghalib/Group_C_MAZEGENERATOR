@@ -3,3 +3,4 @@ build/
 *.swp
 *.save
 *.bak
+.DS_Store
