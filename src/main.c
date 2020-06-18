@@ -25,13 +25,28 @@
 
 #ifndef MAIN_H
 #define MAIN_H
-#include <coll_input.h>
+
+#ifndef STDDEF_H
+#define STDDEF_H
+#include <stddef.h>
+#endif
+
+#ifndef MAZE_H
+#define MAZE_H
+#include "maze.h"
+#endif
+
+
+//#include <main.h>
+//#include <coll_input.h>
 
 #endif /* MAIN_H */
 
 
 
+
 int main(int argc, char* argv[]){
+
 
    coll_args(argc, argv);
 
