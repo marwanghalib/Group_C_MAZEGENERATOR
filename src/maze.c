@@ -252,6 +252,19 @@ __attribute__ ((pure)) void* get_extra(const maze_t* maze, int x, int y){
     }
 }
 
+__attribute__ ((pure)) bool is_full(const maze_t* maze, int x, int y){
+    if(!maze || !maze->data || !maze->data->size_of_extra || x < 0 || x >= maze->width || y < 0 || y >= maze->height){
+        return false;
+    }else{
+        char* p = maze->data->extra+(maze->data->size_of_extra * (maze->width * y + x));
+        unsigned char accumulator = 0;
+        for(unsigned int i = 0; i < maze->data->size_of_extra; i++){
+            accumulator |= p[i];
+        }
+        return !!accumulator;
+    }
+}
+
 static inline void set_v_wall(bool val, int x, int y, maze_t *maze){
     if(east_inside_maze(x, y, maze->width, maze->height)){
         if(val){

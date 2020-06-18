@@ -23,6 +23,13 @@
 #include <stdbool.h>
 #endif
 
+#define min_width  5
+#define max_width  25
+#define min_height 5
+#define max_height 25
+#define margin     10
+
+
 bool destroy_maze_does_not_crash_if_passed_null(void){
     destroy_maze(NULL);
     return true;
@@ -39,9 +46,8 @@ bool destroy_maze_does_not_free_the_maze(void){
 
 bool init_maze_sets_start_and_end_to_NW_corner_and_SE_corner_respectively(void){
     maze_t maze;
-
-    for(int w = 1; w <= 25; w++){
-        for(int h = 1; h <= 25; h++){
+    for(int w = min_width; w <= max_width; w++){
+        for(int h = min_height; h <= max_height; h++){
             init_maze(w, h, &maze);
             if(!(maze.end_x == maze.width-1 && maze.end_y == maze.height-1 && maze.start_x == 0 && maze.start_y == 0)){
                 return false;
@@ -86,9 +92,8 @@ bool init_maze_with_width_or_height_less_than_1_sets_it_to_1(void){
 
 bool init_maze_respects_size_with_am_minimum_of_1(void){
     maze_t maze;
-
-    for(int w = 1; w <= 25; w++){
-        for(int h = 1; h <= 25; h++){
+    for(int w = 1; w <= max_width; w++){
+        for(int h = 1; h <= max_height; h++){
             init_maze(w, h, &maze);
             if(!(maze.width == w && maze.height == h)){
                 return false;
@@ -142,8 +147,8 @@ bool set_bias_sets_the_maze_bias_for_values_above_0(void){
 
 bool get_extra_before_init_maze_returns_null(void){
     maze_t maze;
-    for(int x = -5; x < 15; x++){
-        for(int y = -5; y < 15; y++){
+    for(int x = -margin; x < margin; x++){
+        for(int y = -margin; y < margin; y++){
             if(get_extra(&maze, x, y)){
                 return false;
             }
@@ -154,12 +159,16 @@ bool get_extra_before_init_maze_returns_null(void){
 
 bool get_extra_before_setting_extra_size_returns_null(void){
     maze_t maze;
-    init_maze(5, 5, &maze);
-    for(int x = -5; x < 10; x++){
-        for(int y = -5; y < 10; y++){
-            if(get_extra(&maze, x, y)){
-                destroy_maze(&maze);
-                return false;
+    for(int w = min_width; w <= max_width; w++){
+        for(int h = min_height; h <= max_height; h++){
+            init_maze(w, h, &maze);
+            for(int x = -margin; x < w+margin; x++){
+                for(int y = -margin; y < h+margin; y++){
+                    if(get_extra(&maze, x, y)){
+                        destroy_maze(&maze);
+                        return false;
+                    }
+                }
             }
         }
     }
@@ -169,34 +178,38 @@ bool get_extra_before_setting_extra_size_returns_null(void){
 
 bool get_extra_outside_range_returns_null(void){
     maze_t maze;
-    init_maze(5, 5, &maze);
-    set_size_of_extra(sizeof(int), &maze);
-    for(int x = -5; x < 15; x++){
-        for(int y = -5; y < 0; y++){
-            if(get_extra(&maze, x, y)){
-                destroy_maze(&maze);
-                return false;
+    for(int w = min_width; w <= max_width; w++){
+        for(int h = min_height; h <= max_height; h++){
+            init_maze(w, h, &maze);
+            set_size_of_extra(sizeof(int), &maze);
+            for(int x = -margin; x < w+margin; x++){
+                for(int y = -margin; y < 0; y++){
+                    if(get_extra(&maze, x, y)){
+                        destroy_maze(&maze);
+                        return false;
+                    }
+                }
+                for(int y = h; y < h+margin; y++){
+                    if(get_extra(&maze, x, y)){
+                        destroy_maze(&maze);
+                        return false;
+                    }
+                }
             }
-        }
-        for(int y = 5; y < 10; y++){
-            if(get_extra(&maze, x, y)){
-                destroy_maze(&maze);
-                return false;
-            }
-        }
-    }
-    
-    for(int y = -5; y < 15; y++){
-        for(int x = -5; x < 0; x++){
-            if(get_extra(&maze, x, y)){
-                destroy_maze(&maze);
-                return false;
-            }
-        }
-        for(int x = 5; x < 10; x++){
-            if(get_extra(&maze, x, y)){
-                destroy_maze(&maze);
-                return false;
+            
+            for(int y = -margin; y < h+margin; y++){
+                for(int x = -margin; x < 0; x++){
+                    if(get_extra(&maze, x, y)){
+                        destroy_maze(&maze);
+                        return false;
+                    }
+                }
+                for(int x = w; x < w+margin; x++){
+                    if(get_extra(&maze, x, y)){
+                        destroy_maze(&maze);
+                        return false;
+                    }
+                }
             }
         }
     }
@@ -205,24 +218,25 @@ bool get_extra_outside_range_returns_null(void){
 }
 
 bool get_extra_returns_to_memory_with_default_value_0(void){
-    #define w 25
-    #define h 25
     maze_t maze;
-    init_maze(w, h, &maze);
-    set_size_of_extra(sizeof(int), &maze);
-    for(int x = 0; x < w; x++){
-        for(int y = 0; y < h; y++){
-            int* t = get_extra(&maze, x, y);
-            if(*t){
-                destroy_maze(&maze);
-                return false;
+    
+    for(int w = min_width; w <= max_width; w++){
+        for(int h = min_height; h <= max_height; h++){
+            init_maze(w, h, &maze);
+            set_size_of_extra(sizeof(int), &maze);
+            for(int x = 0; x < w; x++){
+                for(int y = 0; y < h; y++){
+                    int* t = get_extra(&maze, x, y);
+                    if(*t){
+                        destroy_maze(&maze);
+                        return false;
+                    }
+                }
             }
         }
     }
     destroy_maze(&maze);
     return true;
-    #undef w
-    #undef h
 }
 
 
@@ -597,3 +611,9 @@ int main(){
 }
 
 #undef test
+
+#undef min_width
+#undef max_width
+#undef min_height
+#undef max_height
+#undef margin
