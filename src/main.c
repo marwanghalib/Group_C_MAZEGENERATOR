@@ -31,6 +31,11 @@
 #include <stddef.h>
 #endif
 
+#ifndef TILE_H
+#define TILE_H
+#include "tile.h"
+#endif
+
 #ifndef MAZE_H
 #define MAZE_H
 #include "maze.h"
@@ -49,7 +54,17 @@ int main(int argc, char* argv[]){
 
    maze_t maze;
    tile_set_t* tile_set;
-   coll_args(argc, argv, &maze, &tile_set);
+   FILE* fptr = NULL;
+   coll_args(argc, argv, &maze, &tile_set, &fptr);
+   if (fptr != NULL){
+    fprintf(fptr, "This is testing for fprintf...\n");
+    fclose(fptr);
+   }
+   else{
+    printf("file not specified\n");
+    //consider this as stdout, as user didnt not entered any file name
+   }
+
 
     return 0;
 }
