@@ -47,8 +47,9 @@
 
 int main(int argc, char* argv[]){
 
-
-   coll_args(argc, argv);
+   maze_t maze;
+   tile_set_t* tile_set;
+   coll_args(argc, argv, &maze, &tile_set);
 
     return 0;
 }
