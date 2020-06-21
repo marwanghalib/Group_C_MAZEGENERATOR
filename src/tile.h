@@ -67,29 +67,23 @@ tile_set_t* new_tile_set_plus(char* h_wall, char* v_wall, char* corner);
     like 'new_tile_set_pluss' but takes all 16 corners
   requires
     all arguments are valic null terminated strings
-
     corner numbers are described below, add row and column number
-
        0   1   2   3
            |       |
      0 .   .  -.  -.
-
            |       |
      4 .   .  -.  -.
        |   |   |   |
            |       |
      8 .-  .- -.- -.-
-
            |       |
     12 .-  .- -.- -.-
        |   |   |   |
-
     alternatly,
     cross_north * 1 +
     cross_west  * 2 +
     west        * 4 +
     north       * 8
-
   ensure
     tile_set is in a valid state
     default space is " "
@@ -127,7 +121,5 @@ tile_set_t* new_tile_set_no_defaults(char* empty, char* full, char* start, char*
     to calculate value of corner
   ensures
     the char* returned is the correct corner reflecting
-
 */
 char* get_corner(const tile_set_t* set, cell_t cell);
-

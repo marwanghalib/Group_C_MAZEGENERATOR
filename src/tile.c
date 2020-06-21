@@ -65,7 +65,7 @@ tile_set_t* new_tile_set(char* wall){
     set->end    = set->empty+6;
     set->h_wall = set->empty+8;
     set->v_wall = set->empty+8;
-    
+
     set->corner[0] = set->empty;
     for(int i = 1; i < 16; i++){
         set->corner[i] = set->empty+8;
@@ -238,7 +238,6 @@ char* get_corner(const tile_set_t* set, cell_t cell){
                 cell.north       <<3;
     return set->corner[c];
 }
-
 
 
 

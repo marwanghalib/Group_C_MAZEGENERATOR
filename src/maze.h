@@ -97,32 +97,27 @@ int destroy_maze(maze_t *maze);
   do
     return information relating to the presence or absence of
     walls at a point x,y in this pattern, true is closed, false is open
-
       x
      |
     - -
    y | |
-      - 
-        
-    as well as if it is the current start and/or end of the maze
+      -
 
+    as well as if it is the current start and/or end of the maze
     The 4 marks below are stored in
     '.north', '.east', '.south', and '.west'
       x
       -
     y| |
       -
-
     The 4 marks below are stored in
     '.cross_north', '.cross_west'
        x
       |
      -
-    y 
-
+    y
     walls outside of the maze are open
     walls on the edge of the maze are closed
-
   ensure
     no illigal reads
     the cell represents point x,y
@@ -172,7 +167,6 @@ void set_room(cell_t cell, int x, int y, maze_t *maze);
     no illigal writes
     maze is in a valid state
   end
-
 */
 void set_cell(cell_t cell, int x, int y, maze_t *maze);
 
@@ -188,7 +182,7 @@ __attribute__ ((const)) cell_t make_empty_cell(void);
     compare 2 cells for equality.
     cell_a == cell_b only if all fields match exactly
   note
-    this does mean that changes to walls outside the maze 
+    this does mean that changes to walls outside the maze
     can make 2 cells that woudl otherwise be equivelant non equal
     This is nessesary because cells do not know where in the maze they go
  */
@@ -204,7 +198,7 @@ __attribute__ ((const)) bool cells_are_equal(cell_t a, cell_t b);
     if the location x,y is outside the maze, 
       return null
     otherwise
-      return a pointer to writable memory of the specified size. 
+      return a pointer to writable memory of the specified size.
       This memory does not overlap other data.
  */
 __attribute__ ((pure)) void* get_extra(const maze_t* maze, int x, int y);
@@ -223,6 +217,6 @@ __attribute__ ((pure)) bool is_full(const maze_t* maze, int x, int y);
     set the maze up for use of the extra data fields
  ensure
     extra data is 0 initialized
-    no memory is leaked 
+    no memory is leaked
  */
 int set_size_of_extra(size_t new_size, maze_t* maze);
