@@ -145,35 +145,6 @@ void gen_sidewinder(maze_t* maze) {
     // initialize a "run" set to empty
     struct CELL_COORDINATES *run_set = initialize_run_set(maze->width);
 
-    repeated_procedures(run_set, current_column, current_row, maze);
+    //repeated_procedures(run_set, current_column, current_row, maze);
 
-}
-
-// -----------------------------------------------------------------------
-
-int main()
-{
-    // initialize a maze for testing
-    int width = 10;
-    int height = 5;
-    maze_t maze;
-    init_maze(width, height, &maze);
-
-    // Generate a maze using the Sidewinder algorithm
-    gen_sidewinder(&maze);
-
-    // Open a file to print the maze in
-    FILE *fptr;
-    fptr = fopen("output.txt", "w");
-
-    //Choose the tileset character
-    tile_set_t* tile_set = new_tile_set("*");
-
-    // Print the maze in the file
-    print(&maze, tile_set, fptr);
-
-    // Close the file
-    fclose(fptr);
-
-    return 0;
 }
