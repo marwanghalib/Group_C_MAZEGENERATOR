@@ -85,7 +85,5 @@ int main(int argc, char* argv[]){
     printf("file not specified\n");
     //consider this as stdout, as user didnt not entered any file name
    }
-
-
     return 0;
 }
