@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #endif /* STRING_H */
 
+
 #ifndef MAIN_H
 #define MAIN_H
 #include "main.h"
@@ -45,7 +46,7 @@
 
 /* Display help information and exit succesfully
  */
-void help(void)
+void print_help(void)
 {
     printf(" %s - a maze generator and solver\n\
 Usage: %s [options]\n\
@@ -77,8 +78,15 @@ The Program name and the version number is.\n",
 	exit(EXIT_SUCCESS);
 }
 
-void gen_backtrack(maze_t* maze){}
-void gen_sidewinder(maze_t* maze){}
+void gen_backtrack(maze_t* maze){
+    printf("backtrack executed\n");
+    printf("backtrack executed\n");
+}
+void gen_sidewinder(maze_t* maze){
+    printf("sidewinder executed\n");
+    printf("sidewinder executed\n");
+
+}
 
 /*
 This function collects all the arguments and output it into a location and returns a
@@ -92,82 +100,64 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
     double bias = 1.0;
     char* algorithm = "backtrack";
     char* tile_sets = "hedge";
-    int i = 0;
-    int status = 0;
-    char* filename = "maze.txt";
+    int i = 1;
+    char* filename = '\0';
     *output_file = stdout;
 
     while(i < argc) {
-     i++;
-     if (strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--help") == 0){
-        help();
 
-        //return NULL;
+     if (strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--help") == 0){
+            print_help();
+            return NULL;
      }
      else if (strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "--version") == 0){
         version();
-            //return NULL;
+            return NULL;
      }
      else if(strcmp(argv[i], "--width") == 0){
             i++;
             if(argv[i] == NULL){
-                help();
-                //return 0;
+                print_help();
+                return NULL;
             }
             if (atoi(argv[i]) > 0){
                 width = atoi(argv[i]);
+                printf("%d\n", width);
             }
             else{
-               help();
-             //return 0;
+               print_help();
+               return NULL;
             }
      }
      else if(strcmp(argv[i], "--height") == 0){
               i++;
               if(argv[i] == NULL){
-                help();
-                //return NULL;
+                print_help();
+                return NULL;
             }
             if (atoi(argv[i]) > 0){
                 height = atoi(argv[i]);
             }
             else{
-               help();
-             //return 0;
+               print_help();
+               return NULL;
             }
      }
      else if(strcmp(argv[i], "--bias") == 0 || strcmp(argv[i], "-b") == 0){
              i++;
              if(argv[i] == NULL){
-                help();
-                //return NULL;
+                print_help();
+                return NULL;
              }
              bias = atof(argv[i]);
              //i++;
      }
-     /*else if(strcmp(argv[i], "--size") == 0 || strcmp(argv[i], "-s") == 0){
-             i++;
-             int j = i;
-             if((argv[j] == NULL)|| (argv[j+1] == NULL)) {
-                help();
-                //return NULL;
-             }
-             if ((atoi(argv[j]) > 0)||(atoi(argv[j+1]) > 0)){
-                width = atoi(argv[j]);
-                height = atoi(argv[j+1]);
-                i = i+1;
-             }
-             else{
-               help();
-             //return 0;
-             }
-     }*/
      else if(strcmp(argv[i], "--size") == 0 || strcmp(argv[i], "-s") == 0){
              i++;
              //int j = i;
              if((argv[i] == NULL)|| (argv[i+1] == NULL)) {
-                help();
-                //return NULL;
+                print_help();
+                return NULL;
              }
              if ((atoi(argv[i]) > 0)||(atoi(argv[i+1]) > 0)){
                 width = atoi(argv[i]);
@@ -175,90 +165,85 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
                 i = i+1;
              }
              else{
-               help();
-             //return 0;
+               print_help();
+               return NULL;
              }
      }
-     else if(((strcmp(argv[i], "--algorithm") == 0) || (strcmp(argv[i], "-a") == 0))){
+     else if (strcmp(argv[i], "--algorithm") == 0 || strcmp(argv[i], "-a") == 0){
              i++;
              if(argv[i] == NULL){
-                help();
-                //return NULL;
+                print_help();
+                return NULL;
              }
-             if ((strcmp(argv[i], "sidewinder")) == 0) {
+             if (((strcmp(argv[i], "sidewinder")) == 0 || atoi(argv[i]) == 0)) {
                 algorithm = "sidewinder";
+                printf("%s\n", algorithm);
              }
-             else if ((strcmp(argv[i], "backtracker")) == 0) {
-                algorithm = "backtracker";
+             else if ((strcmp(argv[i], "backtrack")) == 0 || atoi(argv[i]) == 1){
+                algorithm = "backtrack";
+                printf("%s\n", algorithm);
              }
             else{
-               help();
-             //return 0;
+               print_help();
+               return NULL;
             }
 
      }
-     else if(strcmp(argv[i], "--tileset") == 0 || strcmp(argv[i], "-t") == 0){
+     else if (strcmp(argv[i], "--tileset") == 0 || strcmp(argv[i], "-t") == 0){
              i++;
              if(argv[i] == NULL){
-                help();
-                //return NULL;
+                print_help();
+                return NULL;
              }
-             if ((strcmp(argv[i], "dungeon")) == 0) {
-                tile_sets = "dungeon";
+             if ((strcmp(argv[i], "hedge")) == 0 || atoi(argv[i]) == 0) {
+                algorithm = "hedge";
              }
-             else if ((strcmp(argv[i], "hedge")) == 0) {
-                tile_sets = "hedge";
+             else if ((strcmp(argv[i], "dungeon")) == 0 || atoi(argv[i]) == 1) {
+                algorithm = "dungeon";
              }
             else{
-               help();
-             //return 0;
-             }
+               print_help();
+               return NULL;
+            }
+
      }
      else if(strcmp(argv[i], "--output") == 0 || strcmp(argv[i], "-o") == 0){
              i++;
              if (argv[i] == NULL) {
-                help();
-                //return NULL;
+                print_help();
+                return NULL;
              }
              filename = argv[i];
-             *output_file = fopen(filename, "w");
      }
-     if(i==(argc-1)){
-            break;
+     else{
+        print_help();
+        return NULL;
      }
-
+     i++;
   }
+  *output_file = fopen(filename, "w");
   //pass values to initialize maze
-  status = init_maze(width,height,maze);
-  //passing the values to bias function
+  if(init_maze(width, height, maze) <0){
+    return NULL; /*error handler code here*/
+    }
+  //pass the values to bias function
   set_bias(bias,maze);
-
-  if (strcmp(tile_sets, "dungeon") == 0){
-    tile_set = &TILE_SET_DUNGEN;
-  }
-  else{
+  //
+  //pass the values to tile function
+  if (strcmp(tile_sets, "hedge") == 0){
     tile_set = &TILE_SET_HEDGE;
   }
+  else{
+    tile_set = &TILE_SET_DUNGEN;
+  }
   //choose algorithm
-  if (strcmp(algorithm, "sidewinder") == 0){
-    return &gen_sidewinder;
+  if (strcmp(algorithm, "backtrack") == 0) {
+    gen_backtrack(maze);
   }
   else{
-    return &gen_backtrack;
+    gen_sidewinder(maze);
   }
 }
 
-
-int main(int argc, char* argv[]){
-
-   maze_t maze;
-   tile_set_t* tile_set;
-   FILE* fptr = NULL;
-   coll_args (argc, argv, &maze, &tile_set, &fptr)(&maze);
-
-
-
-    return 0;
-}
 
 

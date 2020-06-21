@@ -1,3 +1,4 @@
+
 #ifndef STDINT_H
 #define STDINT_H
 #include <stdint.h>
@@ -7,6 +8,17 @@
 #define STDBOOL_H
 #include <stdbool.h>
 #endif
+
+#ifndef STDIO_H
+#define STDIO_H
+#include <stdio.h>
+#endif /* STDIO_H */
+
+#ifndef STRING_H
+#define STRING_H
+#include <string.h>
+#endif /* STRING_H */
+
 
 #ifndef STDLIB_H
 #define STDLIB_H
@@ -47,6 +59,15 @@
 
 #endif /* MAIN_H */
 
+#ifndef TILE_DEFAULT_H
+#define TILE_DEFAULT_H
+#include "tile_default.h"
+#endif
+
+#ifndef COLL_INPUT_H
+#define COLL_INPUT_H
+#include "coll_input.h"
+#endif /* COLL_INPUT_H */
 
 
 

@@ -3,7 +3,6 @@
 #include "maze.h"
 #endif
 
-
 typedef struct tile_set{
     char *empty;
     char *full;
