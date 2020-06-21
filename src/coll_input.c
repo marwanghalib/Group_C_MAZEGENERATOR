@@ -40,8 +40,8 @@
 #include "coll_input.h"
 #endif /* COLL_INPUT_H */
 
-#define PRG_NAME "maze" /* program name */
-#define VERSION  "0.3"  /* version number */
+#define PRG_NAME "Maze Generator" /* program name */
+#define VERSION  "0.1"  /* version number */
 
 
 /* Display help information and exit succesfully
@@ -62,8 +62,6 @@ Usage: %s [options]\n\
   --solve	            Solve the maze\n\
   -i or	--input	        Read stdin as FILE\n",
             PRG_NAME, PRG_NAME);
-
-	//exit(EXIT_SUCCESS);
 }
 /* Display version information and exit succesfully
  */
@@ -115,6 +113,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
         return NULL;
      }
      else if(strcmp(argv[i], "--width") == 0){
+            //argv will contain width value, if it null then call help
             i++;
             if(argv[i] == NULL){
                 print_help();
@@ -131,6 +130,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             i++;
      }
      else if(strcmp(argv[i], "--height") == 0){
+               //argv will contain height value, if it null then call help
               i++;
               if(argv[i] == NULL){
                 print_help();
@@ -147,6 +147,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             i++;
      }
      else if(strcmp(argv[i], "--bias") == 0 || strcmp(argv[i], "-b") == 0){
+              //argv will contain bias value, if it null then call help
              i++;
              if(argv[i] == NULL){
                 print_help();
@@ -157,6 +158,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
              i++;
      }
      else if(strcmp(argv[i], "--size") == 0 || strcmp(argv[i], "-s") == 0){
+              //argv will contain size value, if it null then call help
              i++;
              if((argv[i] == NULL)|| (argv[i+1] == NULL)) {
                 print_help();
@@ -175,6 +177,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
              }
      }
      else if (strcmp(argv[i], "--algorithm") == 0 || strcmp(argv[i], "-a") == 0){
+              //argv will contain algorithm , if it null then call help
              i++;
              if(argv[i] == NULL){
                 print_help();
@@ -195,6 +198,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             i++;
      }
      else if (strcmp(argv[i], "--tileset") == 0 || strcmp(argv[i], "-t") == 0){
+              //argv will contain tileset , if it null then call help
              i++;
              if(argv[i] == NULL){
                 print_help();
@@ -215,6 +219,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             i++;
      }
      else if(strcmp(argv[i], "--output") == 0 || strcmp(argv[i], "-o") == 0){
+              //argv will contain output value, if it null then call help
              i++;
              if (argv[i] == NULL) {
                 print_help();
@@ -244,7 +249,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
   else{
     tile_set = &TILE_SET_DUNGEN;
   }
-  //choose algorithm
+  //pass the value to algorithm
   if (strcmp(algorithm, "backtrack") == 0) {
     gen_backtrack(maze);
   }
