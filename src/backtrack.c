@@ -120,18 +120,18 @@ void heap_method(int x, int y, maze_t* maze) {
 
     bool y_in_range = inRange(0, maze->height - 1, ny);
     bool x_in_range = inRange(0, maze->width - 1, nx);
-    bool is_zero = maze[nx][y] == 0;
+    //bool is_zero = maze[nx][y] == 0;
 
     //printf("ITERATION %d: Y in range %d\n", i, y_in_range);
     //printf("ITERATION %d: X in range %d\n", i, x_in_range);
     //printf("ITERATION %d: cell is zero %d\n", i, is_zero);
 
-    if (y_in_range && x_in_range && is_zero) {
+    //if (y_in_range && x_in_range && is_zero) {
         // put neighbor on the stack
 
 
 
-    }
+    //}
 }
 
 void gen_backtrack(maze_t* maze) {
@@ -144,7 +144,7 @@ void gen_backtrack(maze_t* maze) {
     printf("STARTING 2-D array elements:\n");
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            printf("%d ", maze[i][j]);
+            //printf("%d ", maze[i][j]);
             if (j == (4 - 1)) {
                 printf("\n");
             }
@@ -157,7 +157,7 @@ void gen_backtrack(maze_t* maze) {
     printf("ENDING 2-D array elements:\n");
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            printf("%d ", maze[i][j]);
+            //printf("%d ", maze[i][j]);
             if (j == (4 - 1)) {
                 printf("\n");
             }
@@ -187,24 +187,4 @@ int peek() {
 void display() {
     for (int i = top ; i > -1 ; i--) printf("%d ", stack[i]);
     printf("\n\n");
-}
-
-
-
-//-----------------------------------
-
-int main()
-{
-
-    int width = 10;
-    int height = 5;
-
-    maze_t maze;
-    init_maze(width, height, &maze);
-
-
-    gen_backtrack(&maze);
-
-
-    return 0;
 }
