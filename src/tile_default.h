@@ -1,6 +1,6 @@
 #ifndef TILE_H
 #define TILE_H
-#include <tile.h>
+#include "tile.h"
 #endif
 
 static const tile_set_t hedge_set = (tile_set_t){
