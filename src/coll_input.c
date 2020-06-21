@@ -106,11 +106,13 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
 
      if (strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--help") == 0){
             print_help();
+            i++;
             return NULL;
      }
      else if (strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "--version") == 0){
         version();
-            return NULL;
+        i++;
+        return NULL;
      }
      else if(strcmp(argv[i], "--width") == 0){
             i++;
@@ -126,6 +128,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
                print_help();
                return NULL;
             }
+            i++;
      }
      else if(strcmp(argv[i], "--height") == 0){
               i++;
@@ -141,6 +144,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
                print_help();
                return NULL;
             }
+            i++;
      }
      else if(strcmp(argv[i], "--bias") == 0 || strcmp(argv[i], "-b") == 0){
              i++;
@@ -150,6 +154,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
              }
              bias = atof(argv[i]);
              printf("bias = %f\n", bias);
+             i++;
      }
      else if(strcmp(argv[i], "--size") == 0 || strcmp(argv[i], "-s") == 0){
              i++;
@@ -162,7 +167,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
                 height = atoi(argv[i+1]);
                 printf("width = %d\n", width);
                 printf("height = %d\n", height);
-                i = i+1;
+                i = i+2;
              }
              else{
                print_help();
@@ -187,7 +192,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
                print_help();
                return NULL;
             }
-
+            i++;
      }
      else if (strcmp(argv[i], "--tileset") == 0 || strcmp(argv[i], "-t") == 0){
              i++;
@@ -207,7 +212,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
                print_help();
                return NULL;
             }
-
+            i++;
      }
      else if(strcmp(argv[i], "--output") == 0 || strcmp(argv[i], "-o") == 0){
              i++;
@@ -217,12 +222,12 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
              }
              filename = argv[i];
              printf("filename = %s\n", filename);
+             i++;
      }
      else{
         print_help();
         return NULL;
      }
-     i++;
   }
   *output_file = fopen(filename, "w");
   //pass values to initialize maze
@@ -233,12 +238,12 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
   set_bias(bias,maze);
   //
   //pass the values to tile function
-  /*if (strcmp(tile_sets, "hedge") == 0){
+  if (strcmp(tile_sets, "hedge") == 0){
     tile_set = &TILE_SET_HEDGE;
   }
   else{
     tile_set = &TILE_SET_DUNGEN;
-  }*/
+  }
   //choose algorithm
   if (strcmp(algorithm, "backtrack") == 0) {
     gen_backtrack(maze);

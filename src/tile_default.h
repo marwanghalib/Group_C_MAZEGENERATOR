@@ -84,7 +84,7 @@ static const tile_set_t vt100_set = (tile_set_t){
     .corner[15] = "n"
 };
 
-//const tile_set_t* TILE_SET_HEDGE  = &hedge_set;
-//const tile_set_t* TILE_SET_DUNGEN = &dungen_set;
+const tile_set_t* TILE_SET_HEDGE  = &hedge_set;
+const tile_set_t* TILE_SET_DUNGEN = &dungen_set;
 /*see https://en.wikipedia.org/wiki/Box-drawing_character#Unix,_CP/M,_BBS */
-//const tile_set_t* TILE_SET_VT100    = &vt100_set;
+const tile_set_t* TILE_SET_VT100    = &vt100_set;
