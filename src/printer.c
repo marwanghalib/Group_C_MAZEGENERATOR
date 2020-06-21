@@ -38,6 +38,11 @@ void print(maze_t *my_maze, tile_set_t *my_tile_set , FILE* destination){
     /*Creating variables for the maze width and height*/
     int wid = my_maze->width, hei = my_maze->height;
 
+    /*Stop if 0xX or Xx0*/
+    if(wid == 0 || hei == 0){
+        return;
+    }
+
     /*Creating variable to store cell data*/
     cell_t cell;
 
