@@ -15,30 +15,30 @@
 #endif /* STRING_H */
 
 
-#ifndef MAIN_H
-#define MAIN_H
-#include "main.h"
-#endif /* MAIN_H */
-
 #ifndef MAZE_H
 #define MAZE_H
-#include "maze.h"
+#include <maze.h>
 #endif
 
 #ifndef TILE_H
 #define TILE_H
-#include "tile.h"
+#include <tile.h>
 #endif
 
 #ifndef TILE_DEFAULT_H
 #define TILE_DEFAULT_H
-#include "tile_default.h"
+#include <tile_default.h>
 #endif
 
 #ifndef COLL_INPUT_H
 #define COLL_INPUT_H
-#include "coll_input.h"
+#include <coll_input.h>
 #endif /* COLL_INPUT_H */
+
+#ifndef GEN_ALGS_H
+#define GEN_ALGS_H
+#include <gen_algs.h>
+#endif
 
 #define PRG_NAME "maze" /* program name */
 #define VERSION  "0.3"  /* version number */
@@ -69,21 +69,9 @@ Usage: %s [options]\n\
  */
 void version(void)
 {
-	printf("\
-%s %s\n\
-\n\
-The Program name and the version number is.\n",
-	       PRG_NAME, VERSION);
+	printf("%s %s\n\nThe Program name and the version number is.\n", PRG_NAME, VERSION);
 
 	exit(EXIT_SUCCESS);
-}
-
-void gen_backtrack(maze_t* maze){
-    printf("backtrack executed\n");
-}
-void gen_sidewinder(maze_t* maze){
-    printf("sidewinder executed\n");
-
 }
 
 /*
@@ -239,10 +227,10 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
   //
   //pass the values to tile function
   if (strcmp(tile_sets, "hedge") == 0){
-    tile_set = &TILE_SET_HEDGE;
+    *tile_set = TILE_SET_HEDGE;
   }
   else{
-    tile_set = &TILE_SET_DUNGEN;
+    *tile_set = TILE_SET_DUNGEN;
   }
   //choose algorithm
   if (strcmp(algorithm, "backtrack") == 0) {

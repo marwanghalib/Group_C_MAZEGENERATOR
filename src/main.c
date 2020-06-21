@@ -20,24 +20,6 @@
 #endif /* STRING_H */
 
 
-#ifndef STDLIB_H
-#define STDLIB_H
-#include <stdlib.h>
-#endif
-
-#ifndef STDIO_H
-#define STDIO_H
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#endif /* STDIO_H */
-#define PRG_NAME "maze" /* program name */
-#define VERSION  "0.3"  /* version number */
-
-#ifndef MAIN_H
-#define MAIN_H
-
 #ifndef STDDEF_H
 #define STDDEF_H
 #include <stddef.h>
@@ -45,29 +27,27 @@
 
 #ifndef TILE_H
 #define TILE_H
-#include "tile.h"
+#include <tile.h>
 #endif
 
 #ifndef MAZE_H
 #define MAZE_H
-#include "maze.h"
+#include <maze.h>
 #endif
-
-
-//#include <main.h>
-//#include <coll_input.h>
-
-#endif /* MAIN_H */
 
 #ifndef TILE_DEFAULT_H
 #define TILE_DEFAULT_H
-#include "tile_default.h"
+#include <tile_default.h>
 #endif
 
 #ifndef COLL_INPUT_H
 #define COLL_INPUT_H
-#include "coll_input.h"
+#include <coll_input.h>
 #endif /* COLL_INPUT_H */
+
+
+#define PRG_NAME "maze" /* program name */
+#define VERSION  "0.3"  /* version number */
 
 
 
