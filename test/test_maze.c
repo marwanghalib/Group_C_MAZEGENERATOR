@@ -23,9 +23,9 @@
 #include <stdbool.h>
 #endif
 
-#define min_width  5
+#define min_width  1
 #define max_width  25
-#define min_height 5
+#define min_height 1
 #define max_height 25
 #define margin     10
 
