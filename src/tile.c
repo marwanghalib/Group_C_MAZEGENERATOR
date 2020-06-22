@@ -27,12 +27,12 @@ typedef struct tile_set{
 
 #ifndef TILE_H
 #define TILE_H
-#include <tile.h>
+#include "tile.h"
 #endif
 
 #ifndef MAZE_H
 #define MAZE_H
-#include <maze.h>
+#include "maze.h"
 #endif
 
 int delete_tile_set(tile_set_t* set){

@@ -1,8 +1,7 @@
 #ifndef MAZE_H
 #define MAZE_H
-#include <maze.h>
+#include "maze.h"
 #endif
-
 
 typedef struct tile_set{
     char *empty;
