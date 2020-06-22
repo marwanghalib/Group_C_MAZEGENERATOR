@@ -106,7 +106,7 @@ int opposite_direction(int direction) {
 void shuffle(int *array, size_t n)
 {
     struct timeval tv;
-    gettimeofday(&tv, NULL);
+    //gettimeofday(&tv, NULL);
     int usec = tv.tv_usec;
     srand48(usec);
 
@@ -127,7 +127,7 @@ bool inRange(unsigned low, unsigned high, unsigned x)
     return (low <= x && x <= high);
 }
 
-void heap_method(int x, int y, maze_t* maze) {
+void repeated_steps(int x, int y, maze_t* maze) {
 
     int nx;
     int ny;
@@ -142,18 +142,18 @@ void heap_method(int x, int y, maze_t* maze) {
 
     bool y_in_range = inRange(0, maze->height - 1, ny);
     bool x_in_range = inRange(0, maze->width - 1, nx);
-    //bool is_zero = maze[nx][y] == 0;
+    bool is_zero =  0; // still need to edit this
 
     //printf("ITERATION %d: Y in range %d\n", i, y_in_range);
     //printf("ITERATION %d: X in range %d\n", i, x_in_range);
     //printf("ITERATION %d: cell is zero %d\n", i, is_zero);
 
-    //if (y_in_range && x_in_range && is_zero) {
+    if (y_in_range && x_in_range && is_zero) {
         // put neighbor on the stack
 
 
 
-    //}
+    }
 }
 
 void gen_backtrack(maze_t* maze) {
@@ -173,7 +173,7 @@ void gen_backtrack(maze_t* maze) {
         }
     }
 
-    heap_method(0, 0, maze);
+    repeated_steps(0, 0, maze);
 
     //Displaying array elements
     printf("ENDING 2-D array elements:\n");

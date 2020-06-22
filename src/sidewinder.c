@@ -106,7 +106,7 @@ void repeated_procedures(struct CELL_COORDINATES run_set[], struct CELL_COORDINA
     }
 
     bool go_east = add_to_run_set(run_set, current_cell_coordinates);
-    cell_t new_cell;
+    //cell_t new_cell;
     cell_t cell;
     int random_number;
 
