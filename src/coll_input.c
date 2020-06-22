@@ -25,6 +25,7 @@
 #include <tile.h>
 #endif
 
+
 #ifndef TILE_DEFAULT_H
 #define TILE_DEFAULT_H
 #include <tile_default.h>
@@ -87,8 +88,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
     char* algorithm = "backtrack";
     char* tile_sets = "hedge";
     int i = 1;
-    char* filename = '\0';
-    *output_file = stdout;
+    char* output_file_path = NULL;
 
     while(i < argc) {
 
@@ -110,7 +110,6 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             }
             if (atoi(argv[i]) > 0){
                 width = atoi(argv[i]);
-                printf("width = %d\n", width);
             }
             else{
                print_help();
@@ -126,7 +125,6 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             }
             if (atoi(argv[i]) > 0){
                 height = atoi(argv[i]);
-                printf("height %d\n", height);
             }
             else{
                print_help();
@@ -141,7 +139,6 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
                 return NULL;
              }
              bias = atof(argv[i]);
-             printf("bias = %f\n", bias);
              i++;
      }
      else if(strcmp(argv[i], "--size") == 0 || strcmp(argv[i], "-s") == 0){
@@ -153,8 +150,6 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
              if ((atoi(argv[i]) > 0)||(atoi(argv[i+1]) > 0)){
                 width = atoi(argv[i]);
                 height = atoi(argv[i+1]);
-                printf("width = %d\n", width);
-                printf("height = %d\n", height);
                 i = i+2;
              }
              else{
@@ -170,11 +165,9 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
              }
              if (((strcmp(argv[i], "sidewinder")) == 0 || atoi(argv[i]) == 0)) {
                 algorithm = "sidewinder";
-                printf("algorithm = %s\n", algorithm);
              }
              else if ((strcmp(argv[i], "backtrack")) == 0 || atoi(argv[i]) == 1){
                 algorithm = "backtrack";
-                printf("algorithm = %s\n", algorithm);
              }
             else{
                print_help();
@@ -190,11 +183,9 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
              }
              if ((strcmp(argv[i], "hedge")) == 0 || atoi(argv[i]) == 0) {
                 tile_sets = "hedge";
-                printf("tilesets = %s\n", tile_sets);
              }
              else if ((strcmp(argv[i], "dungeon")) == 0 || atoi(argv[i]) == 1) {
                 tile_sets = "dungeon";
-                printf("titlesets = %s\n", tile_sets);
              }
             else{
                print_help();
@@ -208,8 +199,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
                 print_help();
                 return NULL;
              }
-             filename = argv[i];
-             printf("filename = %s\n", filename);
+             output_file_path = argv[i];
              i++;
      }
      else{
@@ -217,13 +207,20 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
         return NULL;
      }
   }
-  *output_file = fopen(filename, "w");
+  
   //pass values to initialize maze
   if(init_maze(width, height, maze) <0){
     return NULL; /*error handler code here*/
-    }
+  }
+    
   //pass the values to bias function
   set_bias(bias,maze);
+  
+  if(output_file_path){
+    *output_file = fopen(output_file_path, "w");
+  }else{
+  	*output_file = stdout;
+  }
   //
   //pass the values to tile function
   if (strcmp(tile_sets, "hedge") == 0){
@@ -234,10 +231,10 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
   }
   //choose algorithm
   if (strcmp(algorithm, "backtrack") == 0) {
-    gen_backtrack(maze);
+    return &gen_backtrack;
   }
   else{
-    gen_sidewinder(maze);
+    return &gen_sidewinder;
   }
 }
 

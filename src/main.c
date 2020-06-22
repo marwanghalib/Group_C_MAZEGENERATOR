@@ -30,14 +30,9 @@
 #include <tile.h>
 #endif
 
-#ifndef MAZE_H
-#define MAZE_H
-#include <maze.h>
-#endif
-
-#ifndef TILE_DEFAULT_H
-#define TILE_DEFAULT_H
-#include <tile_default.h>
+#ifndef PRINTER_H
+#define PRINTER_H
+#include <printer.h>
 #endif
 
 #ifndef COLL_INPUT_H
@@ -56,14 +51,14 @@ int main(int argc, char* argv[]){
    maze_t maze;
    tile_set_t* tile_set;
    FILE* fptr = NULL;
-   coll_args(argc, argv, &maze, &tile_set, &fptr);
-   if (fptr != NULL){
-    fprintf(fptr, "This is testing for fprintf...\n");
-    fclose(fptr);
+   void (*gen_alg)(maze_t*) = coll_args(argc, argv, &maze, &tile_set, &fptr);
+   if(!gen_alg){
+   	 return -1;
    }
-   else{
-    printf("file not specified\n");
-    //consider this as stdout, as user didnt not entered any file name
+   (*gen_alg)(&maze);
+   print_maze(&maze, tile_set, fptr);
+   if(fptr && fptr != stdout){
+   	fclose(fptr);
    }
     return 0;
 }

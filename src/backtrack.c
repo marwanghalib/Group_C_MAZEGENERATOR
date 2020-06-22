@@ -1,12 +1,34 @@
 #ifndef MAZE_H
 #define MAZE_H
-#include "maze.h"
+#include <maze.h>
 #endif
 
+#ifndef SDTBOOL_H
+#define STDBOOL_H
 #include <stdbool.h>
-#include <sys/time.h>
-#include<stdio.h>
-#include<stdlib.h>
+#endif
+
+#ifndef STDLIB_H
+#define STDLIB_H
+#include <stdlib.h>
+#endif
+
+#ifndef STDIO_H
+#define STDIO_H
+#include <stdio.h>
+#endif
+
+#ifndef TIME_H
+#define TIME_H
+#include <time.h>
+#endif
+
+
+#ifndef GEN_ALGS_H
+#define GEN_ALGS_H
+#include <gen_algs.h>
+#endif
+
 
 #define NORTH 1
 #define SOUTH 2

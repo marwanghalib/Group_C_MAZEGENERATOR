@@ -1,16 +1,6 @@
 #ifndef MAZE_H
 #define MAZE_H
-#include "maze.h"
-#endif
-
-#ifndef PRINTER_H
-#define PRINTER_H
-#include "printer.h"
-#endif
-
-#ifndef TILE_H
-#define tile_H
-#include "tile.h"
+#include <maze.h>
 #endif
 
 #ifndef SDTBOOL_H
@@ -32,6 +22,12 @@
 #define TIME_H
 #include <time.h>
 #endif
+
+#ifndef GEN_ALGS_H
+#define GEN_ALGS_H
+#include <gen_algs.h>
+#endif
+
 
 // Used for adding and keeping track of cells in the "run" set
 struct CELL_COORDINATES
