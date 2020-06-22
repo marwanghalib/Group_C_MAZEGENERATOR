@@ -98,10 +98,10 @@ void reinitialize_run_set(struct CELL_COORDINATES *run_set, int maze_width) {
 
 void repeated_procedures(struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *current_cell_coordinates, maze_t* maze) {
 
-    printf("Current cell is [column, row] [%d,%d] of the maze...\n", (*current_cell_coordinates).column, (*current_cell_coordinates).row);
+    //printf("Current cell is [column, row] [%d,%d] of the maze...\n", (*current_cell_coordinates).column, (*current_cell_coordinates).row);
 
     if (((*current_cell_coordinates).row == (maze->end_y)) && ((*current_cell_coordinates).column == (maze->end_x))) {
-        printf("We reached the end of the maze. Exiting the function\n");
+        //printf("We reached the end of the maze. Exiting the function\n");
         return;
     }
 
