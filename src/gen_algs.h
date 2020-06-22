@@ -1,6 +1,6 @@
 #ifndef MAZE_H
 #define MAZE_H
-#include <maze_h>
+#include "maze_h"
 #endif
 
 void gen_sidewinder(maze_t* maze);

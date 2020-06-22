@@ -23,6 +23,11 @@
 #include "maze.h"
 #endif
 
+#ifndef TILE_DEFAULT_H
+#define TILE_DEFAULT_H
+#include "tile_default.h"
+#endif
+
 #define width_bytes(w) ((((w)-1)>>3)+1)
 #define index_of_wall(x) ((x)>>3)
 #define mask_for_wall(x) (((uint8_t)1)<<((x)&0b00000111))

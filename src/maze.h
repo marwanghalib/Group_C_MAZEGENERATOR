@@ -13,17 +13,29 @@
 #include <stddef.h>
 #endif
 
+#ifndef STDIO_H
+#define STDIO_H
+#include <stdio.h>
+#endif /* STDIO_H */
+
 typedef struct maze_data maze_data_t;
 
 typedef struct{
-    int width;
-    int height;
-    int start_x;
-    int start_y;
-    int end_x;
-    int end_y;
-    double bias;
-    maze_data_t *data;
+    union{
+        struct{
+            FILE* input_file;
+        };
+    	struct{
+            int width;
+		    int height;
+		    int start_x;
+		    int start_y;
+		    int end_x;
+		    int end_y;
+		    double bias;
+		    maze_data_t *data;
+    	}
+    }
 } maze_t;
 
 

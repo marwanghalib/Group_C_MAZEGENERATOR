@@ -1,6 +1,6 @@
 #ifndef MAZE_H
 #define MAZE_H
-#include <maze.h>
+#include "maze.h"
 #endif
 
 #ifndef SDTBOOL_H
@@ -25,7 +25,7 @@
 
 #ifndef GEN_ALGS_H
 #define GEN_ALGS_H
-#include <gen_algs.h>
+#include "gen_algs.h"
 #endif
 
 
