@@ -30,7 +30,7 @@
 
 #ifndef MAZE_H
 #define MAZE_H
-#include <maze.h>
+#include "maze.h"
 #endif
 
 #ifndef TILE_DEFAULT_H

@@ -40,6 +40,11 @@
 #include "tile_default.h"
 #endif
 
+#ifndef PARSER_H
+#define PARSER_H_H
+#include "parser.h"
+#endif
+
 #ifndef COLL_INPUT_H
 #define COLL_INPUT_H
 #include "coll_input.h"
