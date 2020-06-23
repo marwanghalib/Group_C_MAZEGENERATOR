@@ -1,4 +1,3 @@
-
 #ifndef MAZE_H
 #define MAZE_H
 #include "maze.h"
@@ -41,7 +40,8 @@ struct CELL_COORDINATES
     int row;
 };
 
-int run_set_current_size = 0;
+int run_set_current_size = 0; // keeps track of the size of a "run" set
+bool run_set_has_north_path = 0; // at the end of of a maze row we need this to figure out whether the last "run" set of the row has a path NORTH
 
 // Initialize a "run" set
 struct CELL_COORDINATES* initialize_run_set(int maze_width) {
@@ -56,86 +56,110 @@ bool add_to_run_set(struct CELL_COORDINATES *run_set, struct CELL_COORDINATES *c
 
     int i;
 
-    //printf("Run set current size: %d\n", run_set_current_size);
-
-    //printf("Adding to run set [%d,%d]...\n", (*cell_to_be_added).column, (*cell_to_be_added).row);
-
     if (run_set_current_size == 0) {
-        // add to run set
+        // add to beginning of the "run" set
         *run_set = *cell_to_be_added;
 
     } else {
+        // append to the "run" set
         i = run_set_current_size;
         run_set[i] = *cell_to_be_added;
     }
 
+    // we added a cell to the "run" set, increase the size counter
     run_set_current_size++;
 
     // randomly decide whether to go east or not
     bool go_east = rand() & 1;
-
-    for (int i = 0; i < run_set_current_size; i++) {
-        //printf("Member %d of run_set is [column, row]: [%d, %d]\n", i, run_set[i].column, run_set[i].row);
-    }
 
     return go_east;
 }
 
 // Empty the "run" set
 void reinitialize_run_set(struct CELL_COORDINATES *run_set, int maze_width) {
-
-    //free(run_set);
-
-    if  (run_set != NULL) {
-        free(run_set);
-        run_set = NULL;
-    }
-
-    run_set = (struct CELL_COORDINATES*)calloc(maze_width, sizeof(struct CELL_COORDINATES));
+    // set the counter of size to 0
     run_set_current_size = 0;
-
 }
 
-void repeated_procedures(struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *current_cell_coordinates, maze_t* maze) {
+// End of a "run" set
+// Need to carve NORTH if none of the cells have been carved NORTH,
+// otherwise we can have a "run" set at the end of the row without a way NORTH
+void end_of_run_set(cell_t *cell, int *random_number, struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *current_cell_coordinates, maze_t* maze) {
 
-    //printf("Current cell is [column, row] [%d,%d] of the maze...\n", (*current_cell_coordinates).column, (*current_cell_coordinates).row);
-
-    if (((*current_cell_coordinates).row == (maze->end_y)) && ((*current_cell_coordinates).column == (maze->end_x))) {
-        //printf("We reached the end of the maze. Exiting the function\n");
-        return;
+    // go through the "run" set and make check if there is a path NORTH from any of its members
+    for (int i = 0; i < run_set_current_size; i++) {
+        *cell = get_cell(maze, (*current_cell_coordinates).column, (*current_cell_coordinates).row);
+        if (!((*cell).north)) {
+            // we found a path NORTH from this "run" set
+            run_set_has_north_path = 1;
+        }
     }
 
-    bool go_east = add_to_run_set(run_set, current_cell_coordinates);
-    //cell_t new_cell;
+    // we did not find a path NORTH from this "run" set
+    if (!run_set_has_north_path) {
+        // pick a random member of the "run" set and carve NORTH
+        // randomly choose a cell from the "run" set
+        *random_number = rand() % run_set_current_size;
+
+        struct CELL_COORDINATES random_cell_coordinates = run_set[*random_number];
+        cell_t random_cell = get_cell(maze, random_cell_coordinates.column, random_cell_coordinates.row);
+
+        // carve North
+        random_cell.north = 0;
+        set_cell(random_cell, random_cell_coordinates.column, random_cell_coordinates.row, maze);
+    }
+}
+
+// carves the passage to create "run" sets
+void carve_passage(struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *current_cell_coordinates, maze_t* maze) {
+
     cell_t cell;
     int random_number;
+
+    // add cell to the "run" set and decide randomly whether or not to carve EAST
+    bool go_east = add_to_run_set(run_set, current_cell_coordinates);
+
+    // Check if you're at the end of the maze first
+    if (((*current_cell_coordinates).row == (maze->end_y)) && ((*current_cell_coordinates).column == (maze->end_x))) {
+
+        // make sure there is a way NORTH for the last "run" set
+        end_of_run_set(&cell, &random_number, run_set, current_cell_coordinates, maze);
+
+        // you have now generated a maze
+        return;
+    }
 
     cell = get_cell(maze, (*current_cell_coordinates).column, (*current_cell_coordinates).row);
 
     if (go_east) {
-        //printf("Will go EAST\n");
         // carve your way east
         cell.east = 0;
 
         if ((*current_cell_coordinates).column == (maze->width - 1)) {
+            // we are at the end of the row
+
+            // make sure there is a way NORTH for the last "run" set
+            end_of_run_set(&cell, &random_number, run_set, current_cell_coordinates, maze);
+
+            // move on to the next row starting at the first column
             (*current_cell_coordinates).row++;
             (*current_cell_coordinates).column = 0;
+
+            // now we can reinitialize the "run" set
             reinitialize_run_set(run_set, maze->width);
+
         } else {
             set_cell(cell, (*current_cell_coordinates).column, (*current_cell_coordinates).row, maze);
             // new cell is now the current cell
             (*current_cell_coordinates).column++;
         }
 
-        // Recursion
-        repeated_procedures(run_set, current_cell_coordinates, maze);
-    } else {
-        //printf("Will NOT go EAST\n");
+        // Contnuing carving your passage
+        carve_passage(run_set, current_cell_coordinates, maze);
 
+    } else {
         // randomly choose a cell from the "run" set
         random_number = rand() % run_set_current_size;
-
-        //printf("Carving the member number %d of the run set...\n", random_number);
 
         struct CELL_COORDINATES random_cell_coordinates = run_set[random_number];
 
@@ -145,12 +169,11 @@ void repeated_procedures(struct CELL_COORDINATES run_set[], struct CELL_COORDINA
         random_cell.north = 0;
         set_cell(random_cell, random_cell_coordinates.column, random_cell_coordinates.row, maze);
 
-        //printf("Carved NORTH from the cell [column, row] [%d,%d] of the maze...\n", random_cell_coordinates.column, random_cell_coordinates.row);
-
         // empty "run" set
         reinitialize_run_set(run_set, maze->width);
 
         if ((*current_cell_coordinates).column == (maze->width - 1)) {
+            // move on to the next row starting at the first column
             (*current_cell_coordinates).row++;
             (*current_cell_coordinates).column = 0;
         } else {
@@ -158,8 +181,8 @@ void repeated_procedures(struct CELL_COORDINATES run_set[], struct CELL_COORDINA
             (*current_cell_coordinates).column++;
         }
 
-        // Recursion
-        repeated_procedures(run_set, current_cell_coordinates, maze);
+        // Contnuing carving your passage
+        carve_passage(run_set, current_cell_coordinates, maze);
     }
 
 }
@@ -167,12 +190,13 @@ void repeated_procedures(struct CELL_COORDINATES run_set[], struct CELL_COORDINA
 // Generates a maze based on the Sidewinder algorithm
 void gen_sidewinder(maze_t* maze) {
 
+    // enables random number generation
     srand((unsigned)time(NULL));
 
-    // start at 0,0
+    // start at the specified maze obect starting coordinates
     struct CELL_COORDINATES *current_cell_coordinates = (struct CELL_COORDINATES*)malloc(sizeof(struct CELL_COORDINATES));
-    (*current_cell_coordinates).row = 0;
-    (*current_cell_coordinates).column = 0;
+    (*current_cell_coordinates).row = maze->start_y;
+    (*current_cell_coordinates).column = maze->start_x;
 
     // clear entire 1st row (i.e. set cell_t.east to 0 for each cell in that row)
     cell_t cell;
@@ -188,5 +212,18 @@ void gen_sidewinder(maze_t* maze) {
     // initialize a "run" set to empty
     struct CELL_COORDINATES *run_set = initialize_run_set(maze->width);
 
-    repeated_procedures(run_set, current_cell_coordinates, maze);
+    // carve your passage
+    carve_passage(run_set, current_cell_coordinates, maze);
+
+    // free the memory allocated for storing the coordinates of the cell we are manipulating at a specific moment 
+    if  (current_cell_coordinates != NULL) {
+        free(current_cell_coordinates);
+        current_cell_coordinates = NULL;
+    }
+
+    // free the memory allocated for storing the "run" set
+    if  (run_set != NULL) {
+        free(run_set);
+        run_set = NULL;
+    }
 }
