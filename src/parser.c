@@ -46,7 +46,7 @@ void parse_maze(maze_t *my_maze){
     tile_set_t *pmyTileSet = &myTileSet;
 	
 	/*Define the width and height of the maze. Height of maze will be a defult of 1 and will be incremented accordingly via add_row()*/
-	int wid, hei = 1;
+	int wid, hei = 2;
 	
 	
 	/*Point our file pointer to the file that contains the maze*/
@@ -76,6 +76,7 @@ void parse_maze(maze_t *my_maze){
 	cell_t c;
 	int x = 0,y = 0;
 	int done_flag = 0;
+	int test_flag = 0;
 	set_size_of_extra(sizeof(bool), my_maze);
 	bool* extra;
 		
@@ -134,7 +135,7 @@ void parse_maze(maze_t *my_maze){
 			if(x%2 == 0){
 				//c = get_cell(my_maze, x/2, y);
 				//set_cell(c, x/2, y, my_maze);
-				continue;
+				//continue;
 			}
 			/*Setting the south wall*/
 			else{
@@ -145,15 +146,20 @@ void parse_maze(maze_t *my_maze){
 				}
 				else{
 					c = get_cell(my_maze, x/2, y);
-					c.south  = flase;
+					c.south  = false;
 					set_cell(c,  x/2, y, my_maze);
 					done_flag = 0;
 				}
 			}
+			
 		}
 		
 		/*If it is not the last row, add a row and increment y*/
-		if(done_flag == 0){
+		if(done_flag == 0 && test_flag == 0){
+			y++;
+			//add_row(my_maze);
+		}
+		else if(done_flag == 0 && test_flag !=0){
 			y++;
 			add_row(my_maze);
 		}
@@ -162,6 +168,8 @@ void parse_maze(maze_t *my_maze){
 			c.end  = true;
 			set_cell(c, x/2-2, y, my_maze);
 		}
+		
+		test_flag++;
 	}
 
 	return;
