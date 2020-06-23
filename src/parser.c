@@ -147,13 +147,13 @@ void parse_maze(maze_t *my_maze){
 				if(my_char!=' '){
 					c = get_cell(my_maze, x/2, y);
 					c.south  = true;
-					set_cell(c, 0, 0, my_maze);
+					set_cell(c, x/2, y, my_maze);
 					counter++;
 				}
 				else{
 					c = get_cell(my_maze, x/2, y);
 					c.south  = false;
-					set_cell(c, 0, 0, my_maze);
+					set_cell(c, x/2, y, my_maze);
 					counter++;
 					done_flag = 0;
 				}
