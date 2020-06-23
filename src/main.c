@@ -1,4 +1,3 @@
-
 #ifndef STDINT_H
 #define STDINT_H
 #include <stdint.h>
@@ -27,27 +26,17 @@
 
 #ifndef TILE_H
 #define TILE_H
-#include "tile.h"
+#include <tile.h>
 #endif
 
 #ifndef PRINTER_H
 #define PRINTER_H
-#include "printer.h"
-#endif
-
-#ifndef TILE_DEFAULT_H
-#define TILE_DEFAULT_H
-#include "tile_default.h"
-#endif
-
-#ifndef PARSER_H
-#define PARSER_H_H
-#include "parser.h"
+#include <printer.h>
 #endif
 
 #ifndef COLL_INPUT_H
 #define COLL_INPUT_H
-#include "coll_input.h"
+#include <coll_input.h>
 #endif /* COLL_INPUT_H */
 
 
@@ -56,42 +45,19 @@
 
 
 
-void init_test_maze_1(maze_t* maze, FILE* myFile){
-    maze->input_file = myFile;
-}
-
 int main(int argc, char* argv[]){
-	
-	//Example of a file pointer containing a maze
-	FILE *fptr;
-	fptr = fopen("ExampleOutputFile2.txt","r+");
-	cell_t c;
 
-    //Initializing test maze
-    maze_t myMaze;
-    maze_t *pmyMaze = &myMaze;
-    init_test_maze_1(pmyMaze,fptr);
-
-    //Initializing tile set
-    tile_set_t myTileSet;
-    tile_set_t *pmyTileSet = &myTileSet;
-    pmyTileSet = TILE_SET_HEDGE;
-	
-	//Testing parser
-	parse_maze(pmyMaze);
-	
-	//Testing my print function
-    print_maze(pmyMaze, pmyTileSet , stdout);
-	
-	c = get_cell(pmyMaze, 0, 1);
-	if(c.south == true){
-		printf("It doesn't works internally\n");
-	}
-	else{
-		printf("It does work internally\n");
-	}
-	
-	fclose(fptr);
-
+   maze_t maze;
+   tile_set_t* tile_set;
+   FILE* fptr = NULL;
+   void (*gen_alg)(maze_t*) = coll_args(argc, argv, &maze, &tile_set, &fptr);
+   if(!gen_alg){
+   	 return -1;
+   }
+   (*gen_alg)(&maze);
+   print_maze(&maze, tile_set, fptr);
+   if(fptr && fptr != stdout){
+   	fclose(fptr);
+   }
     return 0;
 }
