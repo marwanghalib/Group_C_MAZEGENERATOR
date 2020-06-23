@@ -136,7 +136,7 @@ void solve_maze(maze_t* maze){
 
     struct solver_data* data = get_extra(maze, maze->start_x, maze->start_y);
 
-    if(!data.step_count){/*There is no solusion*/
+    if(!data->step_count){/*There is no solusion*/
         set_size_of_extra(0, maze);
         return;
     }
