@@ -76,7 +76,7 @@ bool add_to_run_set(struct CELL_COORDINATES *run_set, struct CELL_COORDINATES *c
 }
 
 // Empty the "run" set
-void reinitialize_run_set(struct CELL_COORDINATES *run_set, int maze_width) {
+void reinitialize_run_set() {
     // set the counter of size to 0
     run_set_current_size = 0;
 }
@@ -146,7 +146,7 @@ void carve_passage(struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *c
             (*current_cell_coordinates).column = 0;
 
             // now we can reinitialize the "run" set
-            reinitialize_run_set(run_set, maze->width);
+            reinitialize_run_set();
 
         } else {
             set_cell(cell, (*current_cell_coordinates).column, (*current_cell_coordinates).row, maze);
@@ -170,7 +170,7 @@ void carve_passage(struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *c
         set_cell(random_cell, random_cell_coordinates.column, random_cell_coordinates.row, maze);
 
         // empty "run" set
-        reinitialize_run_set(run_set, maze->width);
+        reinitialize_run_set();
 
         if ((*current_cell_coordinates).column == (maze->width - 1)) {
             // move on to the next row starting at the first column
