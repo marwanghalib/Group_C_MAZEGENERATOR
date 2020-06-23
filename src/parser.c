@@ -67,7 +67,6 @@ void parse_maze(maze_t *my_maze){
     } 
 	
 	
-	
 	/*Calculating the width of the maze based on the first row*/
 	wid = (counter - 1)/2;
 	printf("The maze width is %d\n",wid);
@@ -79,45 +78,94 @@ void parse_maze(maze_t *my_maze){
 	/*Start making the maze*/
 	cell_t c;
 	int x = 0,y = 0;
-	int flag = 0;
+	int done_flag = 0;
+		
 	
-	c = fgetc(fptr); 
-    while (c != EOF) 
-    { 
-		counter++;
-		
-		/*Increment rows when you see a new line*/
-		if(c == '\n'){
-			flag++;
-			if(flag==2){
-				hei++;
-				y++;
-				x = 0;
-				add_row(my_maze);
-				flag = 0;
-				continue;
+	while(!done_flag){
+		/*Initially set done flag as true. If this is not true, it will be set to false in the loop*/
+		done_flag = 1;
+		/*First loop to set vertical row*/
+		for(x = 0; x <counter; x++){
+			c = fgetc(fptr); 
+			/*Checking for the west wall*/
+			if(x%2 == 0){
+				if(c!=' '){
+					c = get_cell(my_maze, x/2, y);
+					c.west  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+				else {
+					c = get_cell(my_maze, x/2, y);
+					c.west  = false;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+			}
+			/*Checking for the inside of the cell*/
+			else{
+				if(c==' '){
+					c = get_cell(my_maze, x/2, y);
+					c.empty  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+				else if(c=='.'){
+					c = get_cell(my_maze, x/2, y);
+					c.full  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+				else if(c=='<'){	
+					c = get_cell(my_maze, x/2, y);
+					c.start  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+				else if(c=='>'){
+					c = get_cell(my_maze, x/2, y);
+					c.end  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
 			}
 		}
 		
-		/*This means we landed on a wall*/
-		if(counter% 2 != 0){
-			if(c != ' '){
-				c = get_cell(my_maze, x, y);
-				c.west = true;
-				set_cell(c, x, y, my_maze);
+		counter = 0;
+		c = fgetc(fptr); 
+		
+		/*Second loop to set horizontal row*/
+		for(x=0; x<counter;x++){
+			c = fgetc(fptr); 
+			/*Don't care about corners*/
+			if(x%2 == 0){
+				counter++;
 				continue;
 			}
+			/*Setting the south wall*/
+			else{
+				if(c!=' '){
+					c = get_cell(my_maze, x/2, y);
+					c.south  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+				else{
+					c = get_cell(my_maze, x/2, y);
+					c.south  = false;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+					done_flag = 0;
+				}
+			}
 		}
+		
+		/*If it is not the last row, add a row and increment y*/
+		if(done_flag == 0){
+			y++;
+			add_row(my_maze);
+		}
+	}
 
-        c = fgetc(fptr); 
-		
-    } 
-	
-	
-	c.start = true;
-	
-	
-	
-	
 	return 0;
 }
