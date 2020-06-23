@@ -154,7 +154,7 @@ void carve_passage(struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *c
             (*current_cell_coordinates).column++;
         }
 
-        // Contnuing carving your passage
+        // Continuing carving your passage
         carve_passage(run_set, current_cell_coordinates, maze);
 
     } else {
@@ -181,7 +181,7 @@ void carve_passage(struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *c
             (*current_cell_coordinates).column++;
         }
 
-        // Contnuing carving your passage
+        // Continuing carving your passage
         carve_passage(run_set, current_cell_coordinates, maze);
     }
 
@@ -193,7 +193,7 @@ void gen_sidewinder(maze_t* maze) {
     // enables random number generation
     srand((unsigned)time(NULL));
 
-    // start at the specified maze obect starting coordinates
+    // start at the specified maze object starting coordinates
     struct CELL_COORDINATES *current_cell_coordinates = (struct CELL_COORDINATES*)malloc(sizeof(struct CELL_COORDINATES));
     (*current_cell_coordinates).row = maze->start_y;
     (*current_cell_coordinates).column = maze->start_x;
