@@ -64,7 +64,8 @@ int main(int argc, char* argv[]){
 	
 	//Example of a file pointer containing a maze
 	FILE *fptr;
-	fptr = fopen("ExampleOutputFile.txt","r+");
+	fptr = fopen("ExampleOutputFile2.txt","r+");
+	cell_t c;
 
     //Initializing test maze
     maze_t myMaze;
@@ -81,6 +82,14 @@ int main(int argc, char* argv[]){
 	
 	//Testing my print function
     print_maze(pmyMaze, pmyTileSet , stdout);
+	
+	c = get_cell(pmyMaze, 0, 1);
+	if(c.south == true){
+		printf("It doesn't works internally\n");
+	}
+	else{
+		printf("It does work internally\n");
+	}
 	
 	fclose(fptr);
 

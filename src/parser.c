@@ -46,7 +46,7 @@ void parse_maze(maze_t *my_maze){
     tile_set_t *pmyTileSet = &myTileSet;
 	
 	/*Define the width and height of the maze. Height of maze will be a defult of 1 and will be incremented accordingly via add_row()*/
-	int wid, hei = 2;
+	int wid, hei = 3;
 	
 	
 	/*Point our file pointer to the file that contains the maze*/
@@ -90,7 +90,7 @@ void parse_maze(maze_t *my_maze){
 			my_char = fgetc(fptr); 
 			/*Checking for the west wall*/
 			if(x%2 == 0){
-				if(my_char!=' '){
+				if(my_char!=' ' && my_char!='.'){
 					c = get_cell(my_maze, x/2, y);
 					c.west  = true;
 					set_cell(c, x/2, y, my_maze);
@@ -139,27 +139,36 @@ void parse_maze(maze_t *my_maze){
 			}
 			/*Setting the south wall*/
 			else{
-				if(my_char!=' '){
+				if(my_char!=' ' && my_char!='.'){
+					printf("For full: x: %d, y: %d\n\n",x/2,y);
 					c = get_cell(my_maze, x/2, y);
 					c.south  = true;
 					set_cell(c, x/2, y, my_maze);
 				}
 				else{
+					printf("For empty: x: %d, y: %d\n",x/2,y);
 					c = get_cell(my_maze, x/2, y);
 					c.south  = false;
 					set_cell(c,  x/2, y, my_maze);
 					done_flag = 0;
+					c = get_cell(my_maze, x/2, y);
+					if(c.south == true){
+						printf("It doesn't works internally\n\n");
+					}
+					else{
+						printf("It does work internally\n\n");
+					}
 				}
 			}
 			
 		}
 		
 		/*If it is not the last row, add a row and increment y*/
-		if(done_flag == 0 && test_flag == 0){
+		if(done_flag == 0 && (test_flag == 0 || test_flag == 1)){
 			y++;
 			//add_row(my_maze);
 		}
-		else if(done_flag == 0 && test_flag !=0){
+		else if(done_flag == 0 && test_flag !=0 && test_flag !=1){
 			y++;
 			add_row(my_maze);
 		}

@@ -33,7 +33,7 @@
 #include "tile.h"
 #endif
 
-void print_maze(maze_t *my_maze, const tile_set_t *my_tile_set , FILE* destination){
+void print_maze(maze_t *my_maze, tile_set_t *my_tile_set , FILE* destination){
 
     /*Creating variables for the maze width and height*/
     int wid = my_maze->width, hei = my_maze->height;
@@ -57,7 +57,13 @@ void print_maze(maze_t *my_maze, const tile_set_t *my_tile_set , FILE* destinati
         //First loop of the row will set the corners and north wall*/
         for(x = 0; x<wid; x++){
             cell = get_cell(my_maze, x, y);
-            fprintf(destination, "%s%s", get_corner(my_tile_set,cell), (cell.north)?(my_tile_set->h_wall):(my_tile_set->empty));
+            //Adding full instead of empty on north wall between two full cells
+            if((is_full(my_maze,x,y))&&is_full(my_maze,x,y-1)&&(cell.north==false)){
+                fprintf(destination, "%s%s", get_corner(my_tile_set,cell), my_tile_set->full);
+            }
+            else{
+                fprintf(destination, "%s%s", get_corner(my_tile_set,cell), (cell.north)?(my_tile_set->h_wall):(my_tile_set->empty));
+            }
         }
         /*Run case for row+1 to complete the west wall of last column*/
         cell = get_cell(my_maze, wid, y);
@@ -66,8 +72,14 @@ void print_maze(maze_t *my_maze, const tile_set_t *my_tile_set , FILE* destinati
         /*Second loop of the row will set the west wall and the middle of the cell*/
         for(x = 0; x<wid;x++){
             cell = get_cell(my_maze, x, y);
-            fprintf(destination, "%s%s", (cell.west)?(my_tile_set->v_wall):(my_tile_set->empty), (cell.end)?(my_tile_set->end):((cell.start)?(my_tile_set->start):((is_full(my_maze,x,y))?(my_tile_set->full):(my_tile_set->empty))));
-        }
+            //Adding full instead of empty on west wall between two full cells
+            if((is_full(my_maze,x,y))&&is_full(my_maze,x-1,y)&&(cell.west==false)){
+                fprintf(destination,"%s",my_tile_set->full);
+                fprintf(destination,"%s",(cell.start)?(my_tile_set->start):((is_full(my_maze,x,y))?(my_tile_set->full):(my_tile_set->empty)));
+            }
+            else{
+                fprintf(destination, "%s%s", (cell.west)?(my_tile_set->v_wall):(my_tile_set->empty), (cell.end)?(my_tile_set->end):((cell.start)?(my_tile_set->start):((is_full(my_maze,x,y))?(my_tile_set->full):(my_tile_set->empty))));
+        }   }
         /*Run case for column+1 to complete the south wall of bottom row*/
         cell = get_cell(my_maze, wid, y);
         fprintf(destination, "%s\n", (cell.west)?(my_tile_set->v_wall):(my_tile_set->empty));
