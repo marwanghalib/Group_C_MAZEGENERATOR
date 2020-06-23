@@ -104,12 +104,10 @@ void parse_maze(maze_t *my_maze){
 			else{
 				if(my_char==' '){
 					c = get_cell(my_maze, x/2, y);
-					//c.empty  = true;
 					set_cell(c, x/2, y, my_maze);
 				}
 				else if(my_char=='.'){
 					c = get_cell(my_maze, x/2, y);
-					//c.full  = true;
 					set_cell(c,  x/2, y, my_maze);
 					extra = get_extra(my_maze, x/2, y);
 					extra[0] = true;
@@ -147,8 +145,8 @@ void parse_maze(maze_t *my_maze){
 				}
 				else{
 					c = get_cell(my_maze, x/2, y);
-					c.south  = false;
-					set_cell(c, x/2, y, my_maze);
+					c.south  = flase;
+					set_cell(c,  x/2, y, my_maze);
 					done_flag = 0;
 				}
 			}
@@ -160,9 +158,9 @@ void parse_maze(maze_t *my_maze){
 			add_row(my_maze);
 		}
 		else{
-			c = get_cell(my_maze, x/2, y);
+			c = get_cell(my_maze, x/2-2, y);
 			c.end  = true;
-			set_cell(c, x/2, y, my_maze);
+			set_cell(c, x/2-2, y, my_maze);
 		}
 	}
 
