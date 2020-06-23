@@ -91,17 +91,19 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
     char* output_file_path = NULL;
 
     while(i < argc) {
-
+     //verify is user inputs help and call help function
      if (strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--help") == 0){
             print_help();
             i++;
             return NULL;
      }
+     //verify is user inputs version and call version function
      else if (strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "--version") == 0){
         version();
         i++;
         return NULL;
      }
+     //verify is user inputs width and assigns value
      else if(strcmp(argv[i], "--width") == 0){
             i++;
             if(argv[i] == NULL){
@@ -117,6 +119,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             }
             i++;
      }
+     //verify is user inputs height and assigns value
      else if(strcmp(argv[i], "--height") == 0){
               i++;
               if(argv[i] == NULL){
@@ -132,6 +135,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             }
             i++;
      }
+     //verify is user inputs bias and assigns value
      else if(strcmp(argv[i], "--bias") == 0 || strcmp(argv[i], "-b") == 0){
              i++;
              if(argv[i] == NULL){
@@ -141,6 +145,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
              bias = atof(argv[i]);
              i++;
      }
+     //verify is user inputs size and assigns value
      else if(strcmp(argv[i], "--size") == 0 || strcmp(argv[i], "-s") == 0){
              i++;
              if((argv[i] == NULL)|| (argv[i+1] == NULL)) {
@@ -157,6 +162,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
                return NULL;
              }
      }
+     //verify is user inputs algorithm and assigns value
      else if (strcmp(argv[i], "--algorithm") == 0 || strcmp(argv[i], "-a") == 0){
              i++;
              if(argv[i] == NULL){
@@ -175,6 +181,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             }
             i++;
      }
+     //verify is user inputs tileset and assigns value
      else if (strcmp(argv[i], "--tileset") == 0 || strcmp(argv[i], "-t") == 0){
              i++;
              if(argv[i] == NULL){
@@ -193,6 +200,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
             }
             i++;
      }
+     //verify is user ouptut 
      else if(strcmp(argv[i], "--output") == 0 || strcmp(argv[i], "-o") == 0){
              i++;
              if (argv[i] == NULL) {
@@ -215,7 +223,7 @@ void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE
     
   //pass the values to bias function
   set_bias(bias,maze);
-  
+  //user selects the file path 
   if(output_file_path){
     *output_file = fopen(output_file_path, "w");
   }else{
