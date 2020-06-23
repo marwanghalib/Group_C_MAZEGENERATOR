@@ -34,8 +34,8 @@ typedef struct{
             int end_y;
             double bias;
             maze_data_t *data;
-        }
-    }
+        };
+    };
 } maze_t;
 
 typedef struct{
