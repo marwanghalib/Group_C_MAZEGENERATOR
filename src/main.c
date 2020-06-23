@@ -46,10 +46,14 @@
 
 
 int main(int argc, char* argv[]){
-
+   //Creation of variables
    maze_t maze;
    tile_set_t* tile_set;
    FILE* fptr = NULL;
+
+   /**coll argus collects the argument and gen_alg solve
+   based on the input and there is no return value */
+
    void (*gen_alg)(maze_t*) = coll_args(argc, argv, &maze, &tile_set, &fptr);
    if(!gen_alg){
    	 return -1;

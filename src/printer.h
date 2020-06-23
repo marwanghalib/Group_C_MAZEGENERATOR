@@ -13,4 +13,8 @@
 #include "tile.h"
 #endif
 
+/**
+This function will print the maze, the parammeters used here
+are the maze_t tile_set_t and the file destination
+*/
 void print_maze(maze_t *myMaze, const tile_set_t *myTileSet , FILE* destination);
