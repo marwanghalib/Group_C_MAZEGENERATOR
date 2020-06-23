@@ -191,11 +191,11 @@ __attribute__ ((const)) bool cells_are_equal(cell_t a, cell_t b);
 /**
   do
     get a pointer to the extra data stored in the maze about this location
-  ensure 
-    if set_size_of_extra has not been called, 
-      or it has been called with a value <= 0, 
+  ensure
+    if set_size_of_extra has not been called,
+      or it has been called with a value <= 0,
       will return null
-    if the location x,y is outside the maze, 
+    if the location x,y is outside the maze,
       return null
     otherwise
       return a pointer to writable memory of the specified size.

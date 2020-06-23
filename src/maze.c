@@ -20,7 +20,7 @@
 
 #ifndef MAZE_H
 #define MAZE_H
-#include "maze.h"
+#include <maze.h>
 #endif
 
 #define width_bytes(w) ((((w)-1)>>3)+1)
