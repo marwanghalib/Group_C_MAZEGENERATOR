@@ -82,6 +82,7 @@ void parse_maze(maze_t *my_maze){
 		
 	
 	while(!done_flag){
+		/*Initially set done flag as true. If this is not true, it will be set to false in the loop*/
 		done_flag = 1;
 		/*First loop to set vertical row*/
 		for(x = 0; x <counter; x++){
@@ -159,8 +160,10 @@ void parse_maze(maze_t *my_maze){
 			}
 		}
 		
+		/*If it is not the last row, add a row and increment y*/
 		if(done_flag == 0){
 			y++;
+			add_row(my_maze);
 		}
 	}
 
