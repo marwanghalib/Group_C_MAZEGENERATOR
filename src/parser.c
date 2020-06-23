@@ -79,6 +79,7 @@ void parse_maze(maze_t *my_maze){
 	cell_t c;
 	int x = 0,y = 0;
 	int done_flag = 0;
+	bool* extra;
 		
 	
 	while(!done_flag){
@@ -106,14 +107,16 @@ void parse_maze(maze_t *my_maze){
 			else{
 				if(my_char==' '){
 					c = get_cell(my_maze, x/2, y);
-					c.empty  = true;
+					//c.empty  = true;
 					set_cell(c, x/2, y, my_maze);
 					counter++;
 				}
 				else if(my_char=='.'){
 					c = get_cell(my_maze, x/2, y);
-					c.full  = true;
+					//c.full  = true;
 					set_cell(c,  x/2, y, my_maze);
+					extra = get_extra(my_maze, x/2, y);
+					extra[0] = true;
 					counter++;
 				}
 				else if(my_char=='<'){	
