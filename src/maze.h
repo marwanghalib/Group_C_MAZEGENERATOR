@@ -3,6 +3,11 @@
 #include <stdint.h>
 #endif
 
+#ifndef STDIO_H
+#define STDIO_H
+#include <stdio.h>
+#endif
+
 #ifndef STDBOOL_H
 #define STDBOOL_H
 #include <stdbool.h>
@@ -16,16 +21,22 @@
 typedef struct maze_data maze_data_t;
 
 typedef struct{
-    int width;
-    int height;
-    int start_x;
-    int start_y;
-    int end_x;
-    int end_y;
-    double bias;
-    maze_data_t *data;
+    union{
+        struct{
+            FILE* input_file;
+        };
+        struct{
+            int width;
+            int height;
+            int start_x;
+            int start_y;
+            int end_x;
+            int end_y;
+            double bias;
+            maze_data_t *data;
+        }
+    }
 } maze_t;
-
 
 typedef struct{
     struct{
@@ -102,7 +113,6 @@ int destroy_maze(maze_t *maze);
     - -
    y | |
       -
-
     as well as if it is the current start and/or end of the maze
     The 4 marks below are stored in
     '.north', '.east', '.south', and '.west'
@@ -220,3 +230,18 @@ __attribute__ ((pure)) bool is_full(const maze_t* maze, int x, int y);
     no memory is leaked
  */
 int set_size_of_extra(size_t new_size, maze_t* maze);
+
+
+/**
+ do
+    increace the height of the maze
+ ensure
+    the maze is in a valid state
+    if the function returns true, maze.height is 1 higher than it was before
+    if the function returns false, maze.height is the same at is was before, nothing has changed
+    extra may be reallocated, 
+        when using this function, consider all pointers derived from get extra to be freed, even on a failure.
+ */
+bool add_row(maze_t* maze);
+
+

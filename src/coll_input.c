@@ -17,28 +17,28 @@
 
 #ifndef MAZE_H
 #define MAZE_H
-#include <maze.h>
+#include "maze.h"
 #endif
 
 #ifndef TILE_H
 #define TILE_H
-#include <tile.h>
+#include "tile.h"
 #endif
 
 
 #ifndef TILE_DEFAULT_H
 #define TILE_DEFAULT_H
-#include <tile_default.h>
+#include "tile_default.h"
 #endif
 
 #ifndef COLL_INPUT_H
 #define COLL_INPUT_H
-#include <coll_input.h>
+#include "coll_input.h"
 #endif /* COLL_INPUT_H */
 
 #ifndef GEN_ALGS_H
 #define GEN_ALGS_H
-#include <gen_algs.h>
+#include "gen_algs.h"
 #endif
 
 #define PRG_NAME "maze" /* program name */

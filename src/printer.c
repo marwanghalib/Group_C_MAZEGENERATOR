@@ -33,7 +33,7 @@
 #include "tile.h"
 #endif
 
-void print_maze(maze_t *my_maze, const tile_set_t *my_tile_set , FILE* destination){
+void print_maze(maze_t *my_maze, tile_set_t *my_tile_set , FILE* destination){
 
     /*Creating variables for the maze width and height*/
     int wid = my_maze->width, hei = my_maze->height;

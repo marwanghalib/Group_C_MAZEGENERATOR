@@ -13,4 +13,4 @@
 #include "tile.h"
 #endif
 
-void print_maze(maze_t *myMaze, const tile_set_t *myTileSet , FILE* destination);
+void parse_maze(maze_t *my_maze);
