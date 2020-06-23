@@ -82,7 +82,7 @@ void parse_maze(maze_t *my_maze){
 		
 	
 	while(!done_flag){
-		
+		done_flag = 1;
 		/*First loop to set vertical row*/
 		for(x = 0; x <counter; x++){
 			c = fgetc(fptr); 
@@ -154,8 +154,13 @@ void parse_maze(maze_t *my_maze){
 					c.south  = false;
 					set_cell(c, 0, 0, my_maze);
 					counter++;
+					done_flag = 0;
 				}
 			}
+		}
+		
+		if(done_flag == 0){
+			y++;
 		}
 	}
 
