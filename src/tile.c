@@ -27,7 +27,7 @@ typedef struct tile_set{
 
 #ifndef TILE_H
 #define TILE_H
-#include <tile.h>
+#include "tile.h"
 #endif
 
 #ifndef MAZE_H
