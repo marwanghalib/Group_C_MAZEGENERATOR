@@ -75,12 +75,12 @@ int main(int argc, char* argv[]){
     tile_set_t myTileSet;
     tile_set_t *pmyTileSet = &myTileSet;
     pmyTileSet = TILE_SET_HEDGE;
-
-    //Testing my print function
-    //print_maze(pmyMaze, pmyTileSet , fptr);
 	
 	//Testing parser
 	parse_maze(pmyMaze);
+	
+	//Testing my print function
+    print_maze(pmyMaze, pmyTileSet , stdout);
 	
 	fclose(fptr);
 
