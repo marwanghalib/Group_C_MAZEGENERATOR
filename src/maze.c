@@ -18,9 +18,24 @@
 #include <stddef.h>
 #endif
 
+#ifndef STDIO_H
+#define STDIO_H
+#include <stdio.h>
+#endif
+
+#ifndef STRING_H
+#define STRING_H
+#include <string.h>
+#endif
+
 #ifndef MAZE_H
 #define MAZE_H
-#include <maze.h>
+#include "maze.h"
+#endif
+
+#ifndef TILE_DEFAULT_H
+#define TILE_DEFAULT_H
+#include "tile_default.h"
 #endif
 
 #define width_bytes(w) ((((w)-1)>>3)+1)
@@ -46,18 +61,26 @@ static int delete_maze_data(struct maze_data* data){
                 free(data->v_walls[i]);
             }
             free(data->v_walls);
+
         }
 
         if(data->h_walls){
+        
             for(int i = 0; data->h_walls[i]; i++){
                 free(data->h_walls[i]);
             }
+            
             free(data->h_walls);
+            
         }
         if(data->extra){
+            
             free(data->extra);
+            
         }
+        
         free(data);
+        
     }
     return 0;
 }
@@ -105,6 +128,62 @@ static struct maze_data* new_maze_data(int width, int height){
     return data;
 }
 
+
+bool add_row(maze_t* maze){
+    /*first, expand the top level arrays*/
+    uint8_t** temp_v_walls = realloc(maze->data->v_walls, sizeof(uint8_t*)*(maze->height+2));
+    if(!temp_v_walls){
+    	return false;
+    }else{
+    	temp_v_walls[maze->height+1] = NULL;
+    	temp_v_walls[maze->height  ] = NULL;
+    	maze->data->v_walls = temp_v_walls;
+    }
+
+    uint8_t** temp_h_walls = realloc(maze->data->h_walls, sizeof(uint8_t*)*(maze->height+1));
+    if(!temp_h_walls){
+    	return false;
+    }else{
+    	temp_h_walls[maze->height  ] = NULL;
+    	temp_h_walls[maze->height-1] = NULL;
+    	maze->data->h_walls = temp_h_walls;
+    }
+
+    /*allocate the arrays for the new row*/
+    uint8_t* temp_v_row = malloc(sizeof(uint8_t) * width_bytes(maze->width-1));
+    uint8_t* temp_h_row = malloc(sizeof(uint8_t) * width_bytes(maze->width  ));
+
+    if(!temp_v_row || ! temp_h_row){
+    	free(temp_v_row);
+    	free(temp_h_row);
+    	return false;
+    }else{
+        for(int x = 0; x < sizeof(uint8_t) * width_bytes(maze->width-1); x++){
+        	temp_v_row[x] = 0xFF;
+        }
+        maze->data->v_walls[maze->height  ] = temp_v_row;
+        
+        for(int x = 0; x < sizeof(uint8_t) * width_bytes(maze->width  ); x++){
+        	temp_h_row[x] = 0xFF;
+        }
+        maze->data->h_walls[maze->height-1] = temp_h_row;
+    }
+
+    /*if there is an extra, expand it*/
+    if(maze->data->size_of_extra && maze->data->extra){
+    	void* temp_extra = realloc(maze->data->extra, (maze->data->size_of_extra * maze->width * (maze->height+1)));
+    	if(!temp_extra){
+    		return false;
+    	}else{
+    		maze->data->extra = temp_extra;
+    		memset((maze->data->extra)+(maze->data->size_of_extra*maze->width*maze->height), 0x00, maze->data->size_of_extra*maze->width);
+    	}
+    }
+    maze->height += 1;
+    return true;
+}
+
+
 int set_size_of_extra(size_t new_size, maze_t* maze){
     if(maze->data->extra){
         free(maze->data->extra);
@@ -145,6 +224,7 @@ int destroy_maze(maze_t *maze){
     }
     return 0;
 }
+
 
 void set_bias(double bias, maze_t *maze){
     if(bias > 0){
