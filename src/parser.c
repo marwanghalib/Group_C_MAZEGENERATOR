@@ -40,7 +40,7 @@
 
 void parse_maze(maze_t *my_maze){
 	/*Define variables to store character to be read and the file pointer*/
-	char c;
+	char my_char;
 	FILE *fptr;
 	tile_set_t myTileSet;
     tile_set_t *pmyTileSet = &myTileSet;
@@ -55,15 +55,15 @@ void parse_maze(maze_t *my_maze){
 	/*Measure the width of the maze'*/
 	int counter = 0;
 	
-	c = fgetc(fptr); 
-    while (c != EOF) 
+	my_char = fgetc(fptr); 
+    while (my_char	 != EOF) 
     { 
 		/*Stop when you see a new line (end of row)*/
-		if(c == '\n'){
+		if(my_char == '\n'){
 			break;
 		}
         counter++;
-        c = fgetc(fptr); 
+        my_char = fgetc(fptr); 
     } 
 	
 	
@@ -86,57 +86,57 @@ void parse_maze(maze_t *my_maze){
 		done_flag = 1;
 		/*First loop to set vertical row*/
 		for(x = 0; x <counter; x++){
-			c = fgetc(fptr); 
+			my_char = fgetc(fptr); 
 			/*Checking for the west wall*/
 			if(x%2 == 0){
-				if(c!=' '){
+				if(my_char!=' '){
 					c = get_cell(my_maze, x/2, y);
 					c.west  = true;
-					set_cell(c, 0, 0, my_maze);
+					set_cell(c, x/2, y, my_maze);
 					counter++;
 				}
 				else {
 					c = get_cell(my_maze, x/2, y);
 					c.west  = false;
-					set_cell(c, 0, 0, my_maze);
+					set_cell(c,  x/2, y, my_maze);
 					counter++;
 				}
 			}
 			/*Checking for the inside of the cell*/
 			else{
-				if(c==' '){
+				if(my_char==' '){
 					c = get_cell(my_maze, x/2, y);
 					c.empty  = true;
-					set_cell(c, 0, 0, my_maze);
+					set_cell(c, x/2, y, my_maze);
 					counter++;
 				}
-				else if(c=='.'){
+				else if(my_char=='.'){
 					c = get_cell(my_maze, x/2, y);
 					c.full  = true;
-					set_cell(c, 0, 0, my_maze);
+					set_cell(c,  x/2, y, my_maze);
 					counter++;
 				}
-				else if(c=='<'){	
+				else if(my_char=='<'){	
 					c = get_cell(my_maze, x/2, y);
 					c.start  = true;
-					set_cell(c, 0, 0, my_maze);
+					set_cell(c, x/2, y, my_maze);
 					counter++;
 				}
-				else if(c=='>'){
+				else if(my_char=='>'){
 					c = get_cell(my_maze, x/2, y);
 					c.end  = true;
-					set_cell(c, 0, 0, my_maze);
+					set_cell(c, x/2, y, my_maze);
 					counter++;
 				}
 			}
 		}
 		
 		counter = 0;
-		c = fgetc(fptr); 
+		my_char = fgetc(fptr); 
 		
 		/*Second loop to set horizontal row*/
 		for(x=0; x<counter;x++){
-			c = fgetc(fptr); 
+			my_char = fgetc(fptr); 
 			/*Don't care about corners*/
 			if(x%2 == 0){
 				counter++;
@@ -144,7 +144,7 @@ void parse_maze(maze_t *my_maze){
 			}
 			/*Setting the south wall*/
 			else{
-				if(c!=' '){
+				if(my_char!=' '){
 					c = get_cell(my_maze, x/2, y);
 					c.south  = true;
 					set_cell(c, 0, 0, my_maze);
