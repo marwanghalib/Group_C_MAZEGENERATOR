@@ -79,50 +79,83 @@ void parse_maze(maze_t *my_maze){
 	cell_t c;
 	int x = 0,y = 0;
 	int done_flag = 0;
-	
-    while (c != EOF) 
 		
 	
 	while(!done_flag){
+		
+		/*First loop to set vertical row*/
 		for(x = 0; x <counter; x++){
-				c = fgetc(fptr); 
-				if(c=='\n'){
-					break;
+			c = fgetc(fptr); 
+			/*Checking for the west wall*/
+			if(x%2 == 0){
+				if(c!=' '){
+					c = get_cell(my_maze, x/2, y);
+					c.west  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
 				}
-				if(x%2 == 0){
-					if(c!=' '){
-						c = get_cell(my_maze, x/2, y);
-						c.west  = true;
-						set_cell(c, 0, 0, my_maze);
-					}
-					else {
-						c = get_cell(my_maze, x/2, y);
-						c.west  = false;
-						set_cell(c, 0, 0, my_maze);
-					}
+				else {
+					c = get_cell(my_maze, x/2, y);
+					c.west  = false;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+			}
+			/*Checking for the inside of the cell*/
+			else{
+				if(c==' '){
+					c = get_cell(my_maze, x/2, y);
+					c.empty  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+				else if(c=='.'){
+					c = get_cell(my_maze, x/2, y);
+					c.full  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+				else if(c=='<'){	
+					c = get_cell(my_maze, x/2, y);
+					c.start  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+				else if(c=='>'){
+					c = get_cell(my_maze, x/2, y);
+					c.end  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
+				}
+			}
+		}
+		
+		counter = 0;
+		c = fgetc(fptr); 
+		
+		/*Second loop to set horizontal row*/
+		for(x=0; x<counter;x++){
+			c = fgetc(fptr); 
+			/*Don't care about corners*/
+			if(x%2 == 0){
+				counter++;
+				continue;
+			}
+			/*Setting the south wall*/
+			else{
+				if(c!=' '){
+					c = get_cell(my_maze, x/2, y);
+					c.south  = true;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
 				}
 				else{
-					if(c==' '){
-						c = get_cell(my_maze, x/2, y);
-						c.empty  = true;
-						set_cell(c, 0, 0, my_maze);
-					}
-					else if(c=='.'){
-						c = get_cell(my_maze, x/2, y);
-						c.full  = true;
-						set_cell(c, 0, 0, my_maze);
-					}
-					else if(c=='<'){	
-						c = get_cell(my_maze, x/2, y);
-						c.start  = true;
-						set_cell(c, 0, 0, my_maze);
-					}
-					else if(c=='>'){
-						c = get_cell(my_maze, x/2, y);
-						c.end  = true;
-						set_cell(c, 0, 0, my_maze);
-					}
+					c = get_cell(my_maze, x/2, y);
+					c.south  = false;
+					set_cell(c, 0, 0, my_maze);
+					counter++;
 				}
+			}
 		}
 	}
 
