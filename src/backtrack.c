@@ -38,6 +38,8 @@
 
 int n, top = -1, *stack;
 
+/** @brief Struct backtrack_extra
+ */
 struct backtrack_extra {
     /* put things that you want to store per cell here
     They are initialized to 0 */
@@ -46,6 +48,10 @@ struct backtrack_extra {
 
 //-----------------------------------
 
+/** @brief move_x
+ *  @param int
+ *  return int
+ */
 int move_x(int direction) {
     int moved_x;
     switch (direction) {
@@ -65,6 +71,10 @@ int move_x(int direction) {
     return moved_x;
 }
 
+/** @brief move_y
+ *  @param int
+ *  return int
+ */
 int move_y(int direction) {
     int moved_y;
     switch (direction) {
@@ -84,6 +94,10 @@ int move_y(int direction) {
     return moved_y;
 }
 
+/** @brief opposite_direction
+ *  @param int
+ *  return int
+ */
 int opposite_direction(int direction) {
     int opposed_direction;
     switch (direction) {
@@ -103,6 +117,12 @@ int opposite_direction(int direction) {
     return opposed_direction;
 }
 
+
+/** @brief shuffle
+ *  @param int
+ *  @param size_t
+ *  return void
+ */
 void shuffle(int *array, size_t n)
 {
     struct timeval tv;
@@ -122,10 +142,16 @@ void shuffle(int *array, size_t n)
     }
 }
 
+/** @brief shuffle
+ *  @param int
+ *  @param size_t
+ *  return void
+ */
 bool inRange(unsigned low, unsigned high, unsigned x)
 {
     return (low <= x && x <= high);
 }
+
 
 void heap_method(int x, int y, maze_t* maze) {
 
@@ -195,25 +221,45 @@ void gen_backtrack(maze_t* maze) {
     }
 }
 
-// Push to the stack
+
+/** @brief This function pushes to
+ * a stack
+ *  @param int
+ *  return void
+ */
 void push(int x) {
     if (top == n) return;
     stack[++top] = x;
 }
 
-// pop teh top of the stack
+
+/** @brief This function pop to
+ * a stack
+ * @param void
+ * return int
+ */
 int pop() {
     if (top == -1) return -1;
     return stack[top--];
 }
 
-// check the top of the stack
+
+/** @brief This function check the top of
+ * a stack
+ *  @param void
+ *  return int
+ */
 int peek() {
     if (top == -1) return -1;
     return stack[top];
 }
 
-// display the entire stack
+
+/** @brief This function displays the entire
+ * a stack
+ *  @param void
+ *  return int
+ */
 void display() {
     for (int i = top ; i > -1 ; i--) printf("%d ", stack[i]);
     printf("\n\n");
