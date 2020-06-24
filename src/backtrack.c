@@ -142,17 +142,21 @@ void shuffle(int *array, size_t n)
     }
 }
 
-/** @brief shuffle
- *  @param int
- *  @param size_t
- *  return void
+/** @brief inRange
+ *  @param unsigned
+ *  return bool
  */
 bool inRange(unsigned low, unsigned high, unsigned x)
 {
     return (low <= x && x <= high);
 }
 
-
+/** @brief heap_method
+ *  @param int
+ *  @param int
+ *  @param maze_t
+ *  return bool
+ */
 void heap_method(int x, int y, maze_t* maze) {
 
     int nx;

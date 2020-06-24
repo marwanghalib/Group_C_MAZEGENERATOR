@@ -43,8 +43,14 @@
 #define PRG_NAME "maze" /* program name */
 #define VERSION  "0.3"  /* version number */
 
-
-
+/** @brief This is main function
+ *
+ * 1. call the function coll_args, collects all the arguments from the user
+ * 2. call the function gen_alg, it will generate the algorithm based on the parameter
+ * 3. call the function print_maze, it will print the maze
+ *  @param argc
+ *  @param argv
+*/
 int main(int argc, char* argv[]){
    //Creation of variables
    maze_t maze;

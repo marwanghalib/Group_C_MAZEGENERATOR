@@ -34,7 +34,9 @@
 #include <time.h>
 #endif
 
-// Used for adding and keeping track of cells in the "run" set
+
+/** @brief Used for adding and keeping track of cells in the "run" set
+ */
 struct CELL_COORDINATES
 {
     int column;
@@ -44,7 +46,11 @@ struct CELL_COORDINATES
 int run_set_current_size = 0; // keeps track of the size of a "run" set
 bool run_set_has_north_path = 0; // at the end of of a maze row we need this to figure out whether the last "run" set of the row has a path NORTH
 
-// Initialize a "run" set
+
+/** @brief Initialize a "run" set
+ *  param int
+ *  return CELL_COORDINATE
+ */
 struct CELL_COORDINATES* initialize_run_set(int maze_width) {
 
     struct CELL_COORDINATES *run_set = (struct CELL_COORDINATES*)calloc(maze_width, sizeof(struct CELL_COORDINATES));
@@ -52,7 +58,12 @@ struct CELL_COORDINATES* initialize_run_set(int maze_width) {
     return run_set;
 }
 
-// Add a cell to the "run" set and randomly decide whether to go east or not
+
+/** @brief Add a cell to the "run" set and randomly decide whether to go east or not
+ *  @param CELL_COORDINATES*
+ *  @param CELL_COORDINATES*
+ *  return bool
+*/
 bool add_to_run_set(struct CELL_COORDINATES *run_set, struct CELL_COORDINATES *cell_to_be_added) {
 
     int i;
@@ -76,15 +87,26 @@ bool add_to_run_set(struct CELL_COORDINATES *run_set, struct CELL_COORDINATES *c
     return go_east;
 }
 
-// Empty the "run" set
+
+/** @brief Empty the "run" set
+ *  return void
+ */
 void reinitialize_run_set() {
     // set the counter of size to 0
     run_set_current_size = 0;
 }
 
-// End of a "run" set
-// Need to carve NORTH if none of the cells have been carved NORTH,
-// otherwise we can have a "run" set at the end of the row without a way NORTH
+
+
+
+/** @brief end_of_run_set
+ *  @param cell_t*
+ *  @param int
+ *  @param CELL_COORDINATES
+ *  @param CELL_COORDINATES*
+ *  @param maze_t*
+ *  return void
+*/
 void end_of_run_set(cell_t *cell, int *random_number, struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *current_cell_coordinates, maze_t* maze) {
 
     // go through the "run" set and make check if there is a path NORTH from any of its members
@@ -111,7 +133,14 @@ void end_of_run_set(cell_t *cell, int *random_number, struct CELL_COORDINATES ru
     }
 }
 
-// carves the passage to create "run" sets
+//
+
+/** @brief carves the passage to create "run" sets
+ *  @param CELL_COORDINATES
+ *  @param CELL_COORDINATES*
+ *  @param maze_t*
+ *  return void
+*/
 void carve_passage(struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *current_cell_coordinates, maze_t* maze) {
 
     cell_t cell;
@@ -188,7 +217,11 @@ void carve_passage(struct CELL_COORDINATES run_set[], struct CELL_COORDINATES *c
 
 }
 
-// Generates a maze based on the Sidewinder algorithm
+
+/** @brief Generates a maze based on the Sidewinder algorithm
+ *  @param maze_t*
+ *  return void
+*/
 void gen_sidewinder(maze_t* maze) {
 
     // enables random number generation
