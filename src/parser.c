@@ -38,6 +38,11 @@
 #include "tile_default.h"
 #endif
 
+/** @brief This function parse the maze in the
+ *  file or the stdout when the user enter
+ *  @param maze_t *my_maze
+ *  @return void
+*/
 void parse_maze(maze_t *my_maze){
 	/*Define variables to store character to be read and the file pointer*/
 	char my_char;

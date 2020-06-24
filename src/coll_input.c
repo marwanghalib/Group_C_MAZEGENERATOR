@@ -75,9 +75,24 @@ void version(void)
 	exit(EXIT_SUCCESS);
 }
 
-/*
-This function collects all the arguments and output it into a location and returns a
-pointer to the functions */
+
+/** @brief This function collects all the arguments and output it into a location and returns a
+ *       pointer to the functions.
+ *
+ *  This function collects the arguments that user provided during the inoput when he runs the maze
+ *  all the value are collected height, width, tiles, using agrv and once it is collected it will
+ *  be sent to the first funtion which is initialize maze and this will return a value and then it is
+ *  passed to the algorithm which is sidewinder or backtrack or kriuskel based on the
+ *  user input funtion. This function will also gives an option to chose were the output should be displayed
+ *  wheter its stdout or file path
+ *
+ *  @param int argc
+ *  @param char **argv
+ *  @param maze_t* maze
+ *  @param tile_set_t** tile_set
+ *  @paramFILE** output_file
+ *  @return void
+ */
 
 
 void (*coll_args (int argc, char **argv,maze_t* maze,tile_set_t** tile_set, FILE** output_file))(maze_t*){

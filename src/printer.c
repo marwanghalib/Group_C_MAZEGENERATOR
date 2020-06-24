@@ -33,6 +33,13 @@
 #include "tile.h"
 #endif
 
+/** @brief This function prints the maze in the
+ *  file or the stdout when the user enter
+ *  @param maze_t* maze
+ *  @param tile_set_t *my_tile_set
+ *  @param FILE* destination
+ *  @return void
+*/
 void print_maze(maze_t *my_maze, tile_set_t *my_tile_set , FILE* destination){
 
     /*Creating variables for the maze width and height*/
